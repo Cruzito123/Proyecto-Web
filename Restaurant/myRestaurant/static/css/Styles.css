@@ -19,7 +19,7 @@ header {
 
 /* Estilo para el logo */
 .logo {
-    height: 60px; /* Ajusta la altura según tu logo */
+    height: 90px; /* Aumentamos la altura del logo */
     width: auto;
 }
 

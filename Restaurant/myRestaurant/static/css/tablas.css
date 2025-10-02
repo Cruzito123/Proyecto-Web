@@ -54,3 +54,78 @@ button {
 .alta { background-color: #28a745; }
 .baja { background-color: #dc3545; }
 .modificacion { background-color: #007bff; }
+/* Estilos para el formulario en Altas.html */
+
+h1 {
+    text-align: center;
+    color: #1a3c34; /* Mismo verde que el título principal */
+    margin-top: 40px;
+}
+
+form {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 30px;
+    background-color: #f5f5f5; /* Mismo gris claro que las secciones */
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    display: flex;
+    flex-direction: column;
+    gap: 15px; /* Espacio entre elementos del formulario */
+}
+
+label {
+    font-weight: bold;
+    color: #2e2e2e;
+    margin-bottom: -5px; /* Reduce espacio extra debajo de la etiqueta */
+}
+
+input[type="text"],
+input[type="number"],
+textarea,
+select {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box; /* Asegura que el padding no afecte el ancho total */
+    font-size: 1em;
+}
+
+textarea {
+    resize: vertical; /* Permite al usuario ajustar la altura */
+}
+
+.buttons {
+    display: flex;
+    justify-content: space-around; /* Distribuye los botones equitativamente */
+    margin-top: 20px;
+}
+
+.buttons button {
+    padding: 12px 20px;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    min-width: 120px;
+}
+
+.buttons button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
+.alta {
+    background-color: #4CAF50; /* Verde */
+}
+
+.baja {
+    background-color: #f44336; /* Rojo */
+}
+
+.modificacion {
+    background-color: #008CBA; /* Azul */
+}
