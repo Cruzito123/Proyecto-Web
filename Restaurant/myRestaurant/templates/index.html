@@ -1,18 +1,25 @@
+{%load static%}
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <title>Le Jardine Mexican</title>
-    {% load static %}
-    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+
+    
+    <link rel="stylesheet" href="{% static 'css/Styles.css' %}">
+    <!--
+    <link rel="stylesheet" href="https://raw.githubusercontent.com/Cruzito123/Proyecto-Web/refs/heads/main/Restaurant/myRestaurant/static/css/Styles.css">
+    -->
 </head>
 <body>
     <!-- Encabezado con menú -->
-    <header>
-        <h1>Le Jardine Mexican</h1>
+    <header>        
+        <a href="/">
+            <img src="{% static 'img/logo.png' %}" alt="Logo Le Jardine Mexican" class="logo">
+        </a>
         <nav>
             <ul>
-                <li><a href="#mision">Misión</a></li>
+                <li><a href="#mision">Misión</a></li>                
                 <li><a href="#vision">Visión</a></li>
                 <li><a href="#valores">Valores</a></li>
                 <li><a href="#contacto">Contacto</a></li>
@@ -21,6 +28,8 @@
         </nav>
     </header>
 
+    <!-- Título principal fuera del header para mejor estructura -->
+    <h1 class="main-title">Le Jardine Mexican</h1>
    
     <section id="mision">
         <h2>Misión</h2>

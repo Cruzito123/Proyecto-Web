@@ -11,13 +11,22 @@ body {
 header {
     background-color: #1a3c34; /* Verde oscuro */
     color: #ffffff;
-    padding: 20px;
-    text-align: center;
+    padding: 10px 40px; /* Ajuste de padding */
+    display: flex; /* Habilitar Flexbox */
+    justify-content: space-between; /* Espacio entre logo y nav */
+    align-items: center; /* Centrar verticalmente */
 }
 
-header h1 {
-    margin: 0;
-    font-size: 2em;
+/* Estilo para el logo */
+.logo {
+    height: 60px; /* Ajusta la altura según tu logo */
+    width: auto;
+}
+
+/* Título principal que movimos fuera del header */
+.main-title {
+    text-align: center;
+    color: #1a3c34;
 }
 
 /* Menú de navegación */

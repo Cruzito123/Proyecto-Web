@@ -3,10 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <title>Gestión de Platillos</title>
-    {% load static %}
+    {% load static %}    
+    
     <link rel="stylesheet" href="{% static 'css/tablas.css' %}">
 </head>
 <body>
+    <!-- Encabezado con menú -->
+    <header>        
+        <a href="/">
+            <img src="{% static 'img/logo.png' %}" alt="Logo Le Jardine Mexican" class="logo">
+        </a>
+        <nav>
+            <ul>
+                <li><a href="/#mision">Misión</a></li>
+                <li><a href="/#vision">Visión</a></li>
+                <li><a href="/#valores">Valores</a></li>
+                <li><a href="/#contacto">Contacto</a></li>
+                <li><a href="/Altas">Gestión de Platillos</a></li>
+            </ul>
+        </nav>
+    </header>
+
     <h1>Gestión de Platillos</h1>
     <form action="/procesar_platillo" method="POST">
         <label for="id">ID (para bajas o modificaciones)</label>
@@ -31,9 +48,9 @@
         </select>
 
         <div class="buttons">
-            <button type="submit" name="accion" value="alta" class="alta">Alta</button>
-            <button type="submit" name="accion" value="baja" class="baja">Baja</button>
-            <button type="submit" name="accion" value="modificacion" class="modificacion">Modificación</button>
+            <button type="submit"  value="alta" class="alta">Alta</button>
+            <button type="submit"  value="baja" class="baja">Baja</button>
+            <button type="submit"  value="modificacion" class="modificacion">Modificación</button>
         </div>
     </form>
 </body>
