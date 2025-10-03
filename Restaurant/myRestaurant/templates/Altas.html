@@ -7,6 +7,7 @@
     
     <link rel="stylesheet" href="{% static 'css/tablas.css' %}">
     <link rel="stylesheet" href="{% static 'css/Styles.css' %}">
+    <!--<link rel="stylessheet" href="https://raw.githubusercontent.com/Cruzito123/Proyecto-Web/refs/heads/main/Restaurant/myRestaurant/static/css/Styles.css"-->
 </head>
 <body>
     <!-- Encabezado con menú -->
@@ -30,7 +31,7 @@
         <!-- Formulario de Alta -->
         <section class="form-section">
             <h2>Alta de Platillo</h2>
-            <form action="/procesar_alta" method="POST">
+            <form method="POST">
                 <label for="nombre">Nombre del Platillo</label>
                 <input type="text" id="nombre" name="nombre" placeholder="Nombre del platillo" required>
                 <label for="descripcion">Descripción</label>
@@ -67,12 +68,28 @@
         <!-- Formulario de Baja -->
         <section class="form-section">
             <h2>Baja de Platillo</h2>
-            <form action="/procesar_baja" method="POST">
+            <form  method="POST">
                 <label for="baja-id">ID del Platillo a Eliminar</label>
                 <input type="number" id="baja-id" name="id" placeholder="Ingresa el ID" required>
                 <button type="submit" class="baja">Dar de Baja</button>
             </form>
         </section>
     </div>
+        <footer>
+    <p>
+    <a href="https://jigsaw.w3.org/css-validator/check/referer">
+        <img style="border:0;width:88px;height:31px"
+            src="https://jigsaw.w3.org/css-validator/images/vcss"
+            alt="¡CSS Válido!" />
+    </a>
+    </p>
+     <p>
+        Página validada con <a href="https://validator.w3.org/nu/#textarea" target="_blank">W3C Validator</a>
+        <br>
+        <img src="https://www.w3.org/Icons/valid-html401" alt="HTML válido por W3C" width="88" height="31">
+    </p>
+
+        <p>&copy; 2025 Le Jardine Mexican - Todos los derechos reservados</p>
+    </footer>
 </body>
 </html>

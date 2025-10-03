@@ -1,11 +1,10 @@
-{%load static%}
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <title>Le Jardine Mexican</title>
 
-    
+    {%load static%}
     <link rel="stylesheet" href="{% static 'css/Styles.css' %}">
     <!--
     <link rel="stylesheet" href="https://raw.githubusercontent.com/Cruzito123/Proyecto-Web/refs/heads/main/Restaurant/myRestaurant/static/css/Styles.css">
@@ -28,6 +27,7 @@
                 
             </ul>
         </nav>
+        
     </header>
 
     
@@ -77,23 +77,20 @@
 
     
     <footer>
+    <p>
+    <a href="https://jigsaw.w3.org/css-validator/check/referer">
+        <img style="border:0;width:88px;height:31px"
+            src="https://jigsaw.w3.org/css-validator/images/vcss"
+            alt="¡CSS Válido!" />
+    </a>
+    </p>
+     <p>
+        Página validada con <a href="https://validator.w3.org/nu/#textarea" target="_blank">W3C Validator</a>
+        <br>
+        <img src="https://www.w3.org/Icons/valid-html401" alt="HTML válido por W3C" width="88" height="31">
+    </p>
+
         <p>&copy; 2025 Le Jardine Mexican - Todos los derechos reservados</p>
     </footer>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const prevButton = document.getElementById('prev-slide');
-            const nextButton = document.getElementById('next-slide');
-            const container = document.querySelector('.platillos-container');
-
-            nextButton.addEventListener('click', () => {
-                container.scrollBy({ left: 410, behavior: 'smooth' });
-            });
-
-            prevButton.addEventListener('click', () => {
-                container.scrollBy({ left: -410, behavior: 'smooth' });
-            });
-        });
-    </script>
 </body>
 </html>
