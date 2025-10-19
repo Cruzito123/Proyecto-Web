@@ -76,9 +76,9 @@ WSGI_APPLICATION = 'Restaurant.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'restaurantdb',   # cambia por tu base
+        'NAME': 'restaurant_db',   # cambia por tu base
         'USER': 'postgres',         # cambia por tu usuario
-        'PASSWORD': '1234',
+        'PASSWORD': 'Ghbase21',
         'HOST': 'localhost',
         'PORT': '5432',
     }
