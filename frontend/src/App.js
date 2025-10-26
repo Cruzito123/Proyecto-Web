@@ -10,7 +10,7 @@ import Contact from './pages/public/Contact.jsx';
 
 import Reviews from './pages/public/Reviews.jsx'; 
 import LoyaltyProgram from './pages/public/LoyaltyProgram.jsx';
-
+import Events from './pages/public/Events.jsx';
 
 
 // Importar  vistas privates
@@ -43,6 +43,8 @@ function App() {
           <Route path="/lealtad" element={<LoyaltyProgram />} />
 
           <Route path="/contacto" element={<Contact />} />
+
+          <Route path="/eventos" element={<Events />} />
 
           {/* Ruta 404 para URLs no encontradas */}
           <Route path="*" element={<h1>404 - Página no encontrada</h1>} />

@@ -718,3 +718,133 @@ body, html {
     color: #d1a337;
     font-size: 18px;
 }
+
+/* --- ESTILOS DE EVENTOS --- */
+
+.events-main-content {
+    padding: 40px 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.events-hero-text {
+    margin-bottom: 50px;
+}
+
+.events-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    margin-bottom: 80px;
+}
+
+.event-card {
+    background-color: #FFFFFF;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+}
+
+.event-image-container {
+    position: relative;
+    height: 200px;
+}
+
+.event-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Etiqueta Dinámica sobre la Imagen */
+.event-tag {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    padding: 6px 12px;
+    border-radius: 6px;
+    color: white;
+    font-weight: bold;
+    font-size: 14px;
+    z-index: 5;
+}
+
+.event-info {
+    padding: 20px;
+    text-align: left;
+}
+
+.event-icon-details {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.event-icon {
+    font-size: 20px;
+    margin-right: 10px;
+    color: #d1a337;
+    background-color: #ffe0b2;
+    padding: 8px;
+    border-radius: 50%;
+}
+
+.event-title {
+    font-size: 20px;
+    color: #1a202c;
+    margin: 0;
+}
+
+.event-desc {
+    color: #666;
+    font-size: 15px;
+}
+
+/* --- ESTILOS DEL NEWSLETTER (MODAL) --- */
+.newsletter-section {
+    max-width: 700px;
+    margin: 0 auto 50px;
+}
+
+.newsletter-card-wrapper {
+    padding: 40px;
+}
+
+.newsletter-title {
+    font-size: 30px;
+    color: #1a202c;
+    margin-bottom: 10px;
+}
+
+.newsletter-subtitle {
+    color: #666;
+    margin-bottom: 30px;
+}
+
+.newsletter-form-inline {
+    display: flex;
+    gap: 15px;
+    align-items: flex-start; /* Asegura que el input y botón se alineen */
+}
+
+.newsletter-form-inline .input-group {
+    flex-grow: 1; /* Input toma el máximo espacio posible */
+}
+
+.newsletter-form-inline input[type="email"] {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #f0f0f0;
+    background-color: #f0f0f0; 
+    border-radius: 6px;
+    font-size: 16px;
+}
+
+.subscribe-button {
+    padding: 12px 25px;
+    font-size: 16px;
+    white-space: nowrap; /* Evita que el botón se rompa en dos líneas */
+    background-color: #d1a337;
+    color: white;
+}
