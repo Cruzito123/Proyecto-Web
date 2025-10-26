@@ -5,10 +5,11 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 // Importar componentes de pages public
 import Home from './pages/public/Home.jsx'; 
 import Menu from './pages/public/Menu.jsx'; 
-//import Reservations from './pages/public/Reservations.jsx';
-//import Contact from './pages/public/Contact.jsx'; 
+import Reservations from './pages/public/Reservations.jsx';
+import Contact from './pages/public/Contact.jsx'; 
 
 import Reviews from './pages/public/Reviews.jsx'; 
+import LoyaltyProgram from './pages/public/LoyaltyProgram.jsx';
 
 
 
@@ -36,7 +37,13 @@ function App() {
            <Route path="/resenas" element={<Reviews />} />
           
           <Route path="/menu" element={<Menu />} />
-          
+
+          <Route path="/reservar" element={<Reservations />} />
+
+          <Route path="/lealtad" element={<LoyaltyProgram />} />
+
+          <Route path="/contacto" element={<Contact />} />
+
           {/* Ruta 404 para URLs no encontradas */}
           <Route path="*" element={<h1>404 - Página no encontrada</h1>} />
         </Routes>

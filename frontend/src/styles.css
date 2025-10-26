@@ -455,3 +455,266 @@ body, html {
     color: #4CAF50;
     border: 1px solid #4CAF50;
 }
+
+
+/* --- ESTILOS DE RESERVACIONES --- */
+
+.reservations-main-content {
+    padding: 40px 20px;
+    max-width: 1000px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.reservation-hero-text {
+    margin-bottom: 40px;
+}
+
+.reservation-form-container {
+    text-align: left;
+}
+
+.reservation-form-container .form-title {
+    font-size: 30px;
+    color: #1a202c;
+    margin-bottom: 20px;
+    padding-left: 15px;
+    border-left: 5px solid #d1a337; /* Línea de acento dorado */
+}
+
+.reservation-card-wrapper {
+    /* content-card ya tiene border-radius y sombra */
+    padding: 40px;
+}
+
+/* Cuadrícula de 2 columnas para el formulario */
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Dos columnas iguales */
+    gap: 30px 40px; /* Espacio vertical y horizontal */
+    margin-bottom: 20px;
+}
+
+.form-field {
+    width: 100%;
+}
+
+.reservation-form label {
+    font-weight: 500;
+    color: #1a202c;
+    margin-bottom: 5px;
+    font-size: 16px;
+    display: block;
+}
+
+/* Estilo para los inputs con esquinas redondeadas */
+.reservation-form input[type="text"],
+.reservation-form input[type="email"],
+.reservation-form input[type="tel"],
+.reservation-form input[type="number"],
+.reservation-form input[type="date"],
+.reservation-form input[type="time"] {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #f0f0f0;
+    background-color: #f0f0f0; /* Fondo gris claro */
+    border-radius: 6px;
+    font-size: 16px;
+    transition: background-color 0.2s;
+    box-sizing: border-box;
+    margin-top: 5px;
+}
+
+.reservation-form input:focus {
+    background-color: #FFFFFF;
+    border-color: #d1a337;
+    outline: none;
+}
+
+.large-confirm-button {
+    width: 100%;
+    padding: 15px;
+    font-size: 18px;
+    background-color: #d1a337;
+    color: white;
+    margin-top: 30px;
+}
+
+.email-hint {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 14px;
+    color: #666;
+}
+
+/* --- ESTILOS DE PROGRAMA DE LEALTAD --- */
+
+.loyalty-main-content {
+    padding: 40px 20px;
+    max-width: 600px; /* Ancho más estrecho para el formulario */
+    margin: 0 auto;
+    text-align: center;
+}
+
+.loyalty-form-container {
+    padding: 20px 0;
+}
+
+.loyalty-card-wrapper {
+    /* content-card ya tiene border-radius y sombra */
+    padding: 40px 50px;
+}
+
+.loyalty-icon-container {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background-color: #ffe0b2; /* Dorado muy claro */
+    margin: 0 auto 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 40px;
+    color: #d1a337;
+}
+
+.loyalty-subtitle {
+    font-size: 24px;
+    color: #1a202c;
+    margin-bottom: 5px;
+}
+
+.loyalty-points-info {
+    color: #666;
+    margin-bottom: 30px;
+}
+
+.loyalty-form {
+    text-align: left;
+}
+
+.loyalty-label {
+    font-weight: 600;
+    color: #1a202c;
+    margin-bottom: 5px;
+    display: block;
+}
+
+.loyalty-form input[type="email"] {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #f0f0f0;
+    background-color: #f0f0f0; 
+    border-radius: 6px;
+    font-size: 16px;
+    transition: background-color 0.2s;
+    box-sizing: border-box;
+    margin-top: 5px;
+    margin-bottom: 10px; /* Espacio para el error */
+}
+
+.loyalty-confirm-button {
+    width: 100%;
+    margin-top: 20px;
+    padding: 15px;
+    font-size: 18px;
+    background-color: #d1a337;
+    color: white;
+}
+
+
+/* --- ESTILOS DE LA PÁGINA DE CONTACTO --- */
+
+.contact-main-content {
+    padding: 40px 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.contact-hero-text {
+    margin-bottom: 50px;
+}
+
+/* Cuadrícula de 2 columnas para las tarjetas de información */
+.contact-details-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* 2 columnas */
+    gap: 30px;
+    margin-bottom: 50px;
+}
+
+.contact-info-card {
+    background-color: #FFFFFF;
+    border-radius: 12px;
+    padding: 30px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    text-align: left;
+    display: flex; /* Para alinear el icono con el texto */
+    align-items: flex-start;
+}
+
+.contact-info-card .card-title {
+    font-size: 20px;
+    color: #1a202c;
+    margin-top: 0;
+    margin-bottom: 5px;
+    border: none; /* Quitar la línea inferior del título general */
+    padding-bottom: 0;
+}
+
+/* Estilo para el círculo del ícono (Beige/Dorado) */
+.info-icon-container {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: #ffe0b2; /* Beige/Dorado claro */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+    color: #d1a337;
+    margin-right: 20px;
+    flex-shrink: 0; /* Evita que el contenedor se haga pequeño */
+}
+
+.info-details p {
+    margin: 3px 0;
+    font-size: 16px;
+    color: #555;
+}
+
+.map-link {
+    color: #d1a337;
+    text-decoration: none;
+    font-weight: 500;
+    display: block;
+    margin-top: 10px;
+}
+
+/* --- ESTILOS DE DELIVERY --- */
+
+.delivery-integration {
+    padding: 30px;
+    background-color: #f8f8f8;
+    border-radius: 8px;
+}
+
+.delivery-title {
+    font-size: 28px;
+    color: #1a202c;
+}
+
+.delivery-icons {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin-top: 20px;
+    /* Aquí irían los estilos para los logos de Uber Eats, Rappi, etc. */
+}
+
+.delivery-icon {
+    font-weight: bold;
+    color: #d1a337;
+    font-size: 18px;
+}
