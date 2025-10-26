@@ -1,24 +1,41 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+// Importación correcta para React Router v6+
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+
+// Importa tus componentes de Página Públicos
+import Home from './pages/public/Home'; 
+import Menu from './pages/public/Menu'; 
+import Reservations from './pages/public/Reservations';
+import Contact from './pages/public/Contact'; 
+
+// Importa tus vistas privadas
+import GestionPlatillos from './pages/private/GestionPlatillos'; 
+// Asegúrate de crear estos archivos en las rutas indicadas:
+// - frontend/src/pages/public/Home.jsx
+// - frontend/src/pages/private/GestionPlatillos.jsx, etc.
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    // <Router> (que es BrowserRouter) envuelve toda la aplicación
+    <Router>
+      <div className="App">
+        {/* <Routes> define el conjunto de rutas */}
+        <Routes>
+          
+          {/* VISTAS PÚBLICAS (Cliente) */}
+          <Route path="/" element={<Home />} />
+          <Route path="/menu" element={<Menu />} />
+          <Route path="/reservar" element={<Reservations />} />
+          <Route path="/contacto" element={<Contact />} />
+
+          {/* VISTA PRIVADA (Admin) */}
+          <Route path="/gestion-platillos" element={<GestionPlatillos />} />
+          
+          {/* Ruta 404 para URLs no encontradas */}
+          <Route path="*" element={<h1>404 - Página no encontrada</h1>} />
+        </Routes>
+      </div>
+    </Router>
   );
 }
 
