@@ -8,6 +8,10 @@ import Home from './pages/public/Home.jsx';
 //import Reservations from './pages/public/Reservations.jsx';
 //import Contact from './pages/public/Contact.jsx'; 
 
+import Reviews from './pages/public/Reviews.jsx'; 
+
+
+
 // Importar  vistas privates
 import GestionPlatillos from './pages/private/GestionPlatillos'; 
 // Asegúrate de crear estos archivos en las rutas indicadas:
@@ -28,6 +32,8 @@ function App() {
 
           {/* VISTA PRIVADA (Admin) */}
           <Route path="/gestion-platillos" element={<GestionPlatillos />} />
+
+           <Route path="/resenas" element={<Reviews />} />
           
           {/* Ruta 404 para URLs no encontradas */}
           <Route path="*" element={<h1>404 - Página no encontrada</h1>} />

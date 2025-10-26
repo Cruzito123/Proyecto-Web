@@ -227,3 +227,98 @@ body, html {
     font-size: 14px;
     margin: 10px 0;
 }
+
+
+/* --- ESTILOS DE LA PÁGINA DE RESEÑAS --- */
+
+.reviews-main-content {
+    padding: 40px 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    text-align: center; /* Centrar el título y los filtros */
+}
+
+.reviews-main-content .page-title {
+    font-size: 40px;
+    margin-bottom: 5px;
+}
+
+.reviews-main-content .page-subtitle {
+    font-size: 18px;
+    color: #666;
+    margin-bottom: 40px;
+}
+
+/* Contenedor de Botones de Filtro */
+.filter-buttons {
+    display: inline-flex; /* Para que el grupo de botones esté centrado */
+    border: 1px solid #d1d1d1;
+    border-radius: 8px;
+    margin-bottom: 50px;
+    overflow: hidden; /* Asegura que los bordes redondeados se apliquen bien */
+}
+
+.filter-buttons button {
+    padding: 10px 20px;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    color: #333;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+/* Estilo para el botón activo */
+.filter-buttons button.active {
+    background-color: #f0f0f0; 
+    font-weight: bold;
+    color: #1a202c;
+    border-bottom: 3px solid #d1a337; /* Línea de acento dorado */
+}
+
+.filter-buttons button:hover:not(.active) {
+    background-color: #fafafa;
+}
+
+/* Contenedor de las Tarjetas de Reseña (Cuadrícula) */
+.reviews-list-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* 3 columnas en desktop */
+    gap: 30px;
+    text-align: left;
+}
+
+/* Estilo de la Tarjeta de Reseña */
+.review-item-card {
+    background-color: #FFFFFF;
+    border-radius: 10px;
+    padding: 30px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+    border-top: 5px solid #d1a33740; /* Línea de acento sutil */
+}
+
+.review-user-info {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+/* Icono de Usuario (círculo beige/dorado) */
+.user-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #ffe0b2; /* Color beige/dorado claro */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+    color: #e65100;
+    margin-right: 15px;
+}
+
+.rating-stars {
+    color: gold; /* O un color dorado HEX como #FFD700 */
+    margin-bottom: 10px;
+    font-size: 20px;
+}
