@@ -3,10 +3,10 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 // Importa tus componentes de Página Públicos
-import Home from './pages/public/Home'; 
-import Menu from './pages/public/Menu'; 
-import Reservations from './pages/public/Reservations';
-import Contact from './pages/public/Contact'; 
+import Home from './pages/public/Home.jsx'; 
+//import Menu from './pages/public/Menu.jsx'; 
+//import Reservations from './pages/public/Reservations.jsx';
+//import Contact from './pages/public/Contact.jsx'; 
 
 // Importa tus vistas privadas
 import GestionPlatillos from './pages/private/GestionPlatillos'; 
@@ -24,9 +24,7 @@ function App() {
           
           {/* VISTAS PÚBLICAS (Cliente) */}
           <Route path="/" element={<Home />} />
-          <Route path="/menu" element={<Menu />} />
-          <Route path="/reservar" element={<Reservations />} />
-          <Route path="/contacto" element={<Contact />} />
+          
 
           {/* VISTA PRIVADA (Admin) */}
           <Route path="/gestion-platillos" element={<GestionPlatillos />} />
