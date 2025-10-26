@@ -2,13 +2,13 @@ import React from 'react';
 // Importación correcta para React Router v6+
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
-// Importa tus componentes de Página Públicos
+// Importar componentes de pages public
 import Home from './pages/public/Home.jsx'; 
 //import Menu from './pages/public/Menu.jsx'; 
 //import Reservations from './pages/public/Reservations.jsx';
 //import Contact from './pages/public/Contact.jsx'; 
 
-// Importa tus vistas privadas
+// Importar  vistas privates
 import GestionPlatillos from './pages/private/GestionPlatillos'; 
 // Asegúrate de crear estos archivos en las rutas indicadas:
 // - frontend/src/pages/public/Home.jsx

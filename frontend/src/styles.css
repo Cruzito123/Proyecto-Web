@@ -1,0 +1,229 @@
+/* frontend/src/styles.css */
+
+/* 1. RESET BÁSICO Y FUENTES */
+body, html {
+    margin: 0;
+    padding: 0;
+    background-color: #f0f2f5; /* Fondo claro para la página */
+    font-family: 'Montserrat', sans-serif; 
+    color: #333; /* Texto principal */
+    scroll-behavior: smooth; /* Para que la navegación a #mision sea suave */
+}
+
+/* 2. ESTILOS DEL HEADER (Barra de Navegación) */
+.main-header {
+    background-color: #1a202c; /* Azul oscuro/Negro */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 40px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    position: sticky; /* Fija la barra al tope */
+    top: 0;
+    z-index: 100;
+}
+
+.site-name {
+    color: #d1a337; /* Color Dorado */
+    font-size: 28px;
+    font-weight: 700;
+    font-family: 'Playfair Display', serif; 
+    text-decoration: none;
+    margin-left: 10px;
+}
+
+/* 3. ESTILOS DE NAVEGACIÓN */
+.main-nav ul {
+    list-style: none;
+    display: flex;
+    padding: 0;
+    margin: 0;
+}
+
+.main-nav li {
+    margin-left: 30px; 
+}
+
+.main-nav a {
+    color: #FFFFFF; 
+    text-decoration: none;
+    font-weight: 500;
+    padding-bottom: 5px; 
+    transition: all 0.2s ease-in-out;
+}
+
+.main-nav a.active-link, 
+.main-nav a:hover {
+    color: #d1a337;
+    border-bottom: 2px solid #d1a337;
+}
+
+/* BOTÓN DE ACCIÓN (LOGIN/LOGOUT) */
+.login-button {
+    background-color: #d1a337; 
+    color: #1a202c; 
+    padding: 10px 20px;
+    border-radius: 4px;
+    text-decoration: none;
+    font-weight: bold;
+    margin-left: 40px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.login-button:hover {
+    background-color: #ffc457;
+}
+
+/* --- ESTILOS DE MISIÓN, VISIÓN Y VALORES --- */
+
+.hero-section {
+    text-align: center;
+    padding: 80px 20px 40px;
+    background-color: #f0f2f5;
+}
+
+.hero-title {
+    font-size: 48px;
+    margin-bottom: 10px;
+    font-family: 'Playfair Display', serif; 
+    color: #1a202c; /* Título oscuro */
+}
+
+.hero-slogan {
+    font-size: 20px;
+    color: #555;
+    font-style: italic;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.mision-vision-section, .valores-section {
+    max-width: 1000px; 
+    margin: 40px auto; 
+    padding: 20px;
+}
+
+.content-card {
+    background-color: #FFFFFF; 
+    border-radius: 12px; 
+    padding: 30px;
+    margin-bottom: 30px; 
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08); 
+}
+
+.card-title, .section-title {
+    font-size: 28px;
+    font-weight: 600;
+    border-bottom: 2px solid #d1a337; /* Línea dorada */
+    padding-bottom: 5px;
+    margin-bottom: 15px;
+    color: #1a202c;
+}
+
+.valores-list {
+    list-style: none;
+    padding: 0;
+}
+
+.valores-list li {
+    background-color: #FFFFFF;
+    padding: 15px 20px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    border-left: 5px solid #d1a337; /* Acento dorado */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+/* --- ESTILOS DE GESTIÓN DE PLATILLOS (ADMIN) --- */
+
+.page-title {
+    padding-left: 40px;
+    margin-top: 30px;
+    color: #1a202c;
+    font-size: 36px;
+}
+
+/* Contenedor Flex para alinear las 3 tarjetas */
+.crud-forms-container {
+    display: flex;
+    gap: 30px; /* Espacio entre las tarjetas */
+    padding: 20px 40px;
+    max-width: 1300px;
+    margin: 0 auto;
+}
+
+/* Estilo general para las tarjetas de formularios */
+.admin-card {
+    flex: 1; /* Hace que las 3 tarjetas ocupen el mismo ancho */
+    background-color: #FFFFFF;
+    border-radius: 12px;
+    padding: 30px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+}
+
+.admin-card-title {
+    color: #1a202c;
+    font-size: 24px;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #d1a337; /* Línea dorada */
+    padding-bottom: 10px;
+}
+
+/* Estilos de Formulario */
+.admin-form label {
+    display: block;
+    margin-top: 15px;
+    font-weight: 600;
+    color: #444;
+}
+
+.admin-form input,
+.admin-form textarea,
+.admin-form select {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box; /* Asegura que el padding no añada ancho */
+}
+
+/* ESTILOS DE VALIDACIÓN (Mensaje de Error) */
+.error-message {
+    color: #D32F2F; /* Rojo para errores */
+    font-size: 14px;
+    margin-top: 5px;
+    font-weight: 500;
+}
+
+/* Estilos específicos de botones */
+.submit-button {
+    margin-top: 25px;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    background-color: #d1a337; /* Botones de Alta/Modificar */
+}
+
+.delete-button {
+    background-color: #E53935; /* Botón Dar de Baja en Rojo */
+}
+
+.submit-button:hover {
+    opacity: 0.9;
+}
+
+.hint-text {
+    font-style: italic;
+    color: #777;
+    font-size: 14px;
+    margin: 10px 0;
+}
