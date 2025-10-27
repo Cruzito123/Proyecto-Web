@@ -1,13 +1,11 @@
-/* frontend/src/styles.css */
-
 /* 1. RESET BÁSICO Y FUENTES */
 body, html {
     margin: 0;
     padding: 0;
-    background-color: #f0f2f5; /* Fondo claro para la página */
+    background-color: #f0f2f5; 
     font-family: 'Montserrat', sans-serif; 
-    color: #333; /* Texto principal */
-    scroll-behavior: smooth; /* Para que la navegación a #mision sea suave */
+    color: #333; 
+    scroll-behavior: smooth; 
 }
 
 /* 2. ESTILOS DEL HEADER (Barra de Navegación) */

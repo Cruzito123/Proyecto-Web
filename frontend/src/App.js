@@ -15,6 +15,7 @@ import Cliente from './components/Cliente/cliente.jsx';
 import Reservations from './components/Cliente/Reservations.jsx';
 // Importar  vistas privates
 import GestionPlatillos from './pages/private/GestionPlatillos'; 
+
 import Mesero from './components/mesero/Mesero.jsx';
 import PanelChef from './pages/private/Chef.jsx';
 import AsignarMesa from './components/mesero/AsignarMesa.jsx';
@@ -23,6 +24,11 @@ import VerReservaciones from './components/mesero/VerReservaciones';
 // Asegúrate de crear estos archivos en las rutas indicadas:
 // - frontend/src/pages/public/Home.jsx
 // - frontend/src/pages/private/GestionPlatillos.jsx, etc.
+
+import Mesero from './pages/private/Mesero.jsx';
+import Chef from './pages/private/Chef.jsx';
+
+
 
 function App() {
   // 1. Estado centralizado para las mesas activas
@@ -114,6 +120,7 @@ function App() {
 
           <Route path="/chef" element={<PanelChef ordenesPendientes={ordenesPendientes} onCompletarOrden={handleCompletarOrden} />} />
 
+             {/* VISTAS PÚBLICAS (Cliente) */}
            <Route path="/resenas" element={<Reviews />} />
           
           <Route path="/menu" element={<Menu />} />

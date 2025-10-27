@@ -1,12 +1,9 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-// Asumo que tu 'styles.css' se importa en un archivo superior como App.js o index.js
-// Si no, descomenta la siguiente línea:
-// import '../../styles.css'; 
 
 import HedearUsuarios from '../common/HedearUsuarios.jsx';
 
-// Puedes reemplazar estos íconos con los de una librería como React-Icons
+
 const IconoUsuario = () => '👤';
 const IconoDinero = () => '💲';
 const IconoReloj = () => '🕓';
