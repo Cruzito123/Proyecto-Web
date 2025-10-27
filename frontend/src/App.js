@@ -17,9 +17,7 @@ import Events from './pages/public/Events.jsx';
 import GestionPlatillos from './pages/private/GestionPlatillos'; 
 import Mesero from './pages/private/Mesero.jsx';
 import Chef from './pages/private/Chef.jsx';
-// Asegúrate de crear estos archivos en las rutas indicadas:
-// - frontend/src/pages/public/Home.jsx
-// - frontend/src/pages/private/GestionPlatillos.jsx, etc.
+
 
 function App() {
   return (
@@ -38,6 +36,7 @@ function App() {
           <Route path="/mesero" element={<Mesero />} />
           <Route path="/chef" element={<Chef />} />
 
+             {/* VISTAS PÚBLICAS (Cliente) */}
            <Route path="/resenas" element={<Reviews />} />
           
           <Route path="/menu" element={<Menu />} />

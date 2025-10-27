@@ -1,4 +1,3 @@
-// frontend/src/components/admin/BajaPlatillo.jsx
 
 import React from 'react';
 import { useForm } from 'react-hook-form';
