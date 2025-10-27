@@ -12,7 +12,7 @@ const IconoAccion = () => '⚡';
 const IconoAlerta = () => '⚠️';
 
 
-function PanelChef() {
+function PanelChef({ ordenesPendientes = [] }) {
   // Estado para controlar la visibilidad del modal de bienvenida
   const [mostrarModal, setMostrarModal] = useState(true);
 
@@ -110,63 +110,29 @@ function PanelChef() {
         <section className="chef-main-column">
           <h3 className="chef-section-title"><IconoOrden /> Órdenes en Preparación</h3>
           
-          {/* Tarjeta de Orden 1 */}
-          <div className="chef-order-card">
-            <div className="chef-order-header">
-              <h4>Mesa #5</h4>
-              <span><IconoTiempo /> 8 min</span>
-            </div>
-            <div className="chef-order-item-list">
-              <div className="chef-order-item">
-                <span><strong>2x</strong> Coq au Vin</span>
-                <span>~15 min</span>
+          {ordenesPendientes.length > 0 ? (
+            ordenesPendientes.map(orden => (
+              <div key={orden.id} className="chef-order-card">
+                <div className="chef-order-header">
+                  <h4>Mesa #{orden.mesa}</h4>
+                  <span><IconoTiempo /> Recién llegada</span>
+                </div>
+                <div className="chef-order-item-list">
+                  {orden.items.map(item => (
+                    <div key={item.id} className="chef-order-item">
+                      <span><strong>{item.cantidad}x</strong> {item.name}</span>
+                    </div>
+                  ))}
+                </div>
+                <div className="chef-order-actions">
+                  <button className="chef-btn-process">En Proceso</button>
+                  <button className="chef-btn-complete">Completar</button>
+                </div>
               </div>
-              <div className="chef-order-item">
-                <span><strong>1x</strong> Ratatouille</span>
-                <span>~12 min</span>
-              </div>
-            </div>
-            <div className="chef-order-actions">
-              <button className="chef-btn-process">En Proceso</button>
-              <button className="chef-btn-complete">Completar</button>
-            </div>
-          </div>
-
-          {/* Tarjeta de Orden 2 (Urgente) */}
-          <div className="chef-order-card">
-            <div className="chef-order-header">
-              <h4>Mesa #12 <span className="chef-tag-urgent">Urgente</span></h4>
-              <span><IconoTiempo /> 18 min</span>
-            </div>
-            <div className="chef-order-item-list">
-              <div className="chef-order-item">
-                <span><strong>1x</strong> Bouillabaisse</span>
-                <span>~20 min</span>
-              </div>
-            </div>
-            <div className="chef-order-actions">
-              <button className="chef-btn-process">En Proceso</button>
-              <button className="chef-btn-complete">Completar</button>
-            </div>
-          </div>
-          
-          {/* Tarjeta de Orden 3 */}
-          <div className="chef-order-card">
-            <div className="chef-order-header">
-              <h4>Mesa #8</h4>
-              <span><IconoTiempo /> 5 min</span>
-            </div>
-            <div className="chef-order-item-list">
-              <div className="chef-order-item">
-                <span><strong>3x</strong> Soufflé</span>
-                <span>~25 min</span>
-              </div>
-            </div>
-            <div className="chef-order-actions">
-              <button className="chef-btn-process">En Proceso</button>
-              <button className="chef-btn-complete">Completar</button>
-            </div>
-          </div>
+            ))
+          ) : (
+            <p style={{ textAlign: 'center', padding: '20px', color: '#777' }}>No hay órdenes pendientes en este momento.</p>
+          )}
 
         </section>
 

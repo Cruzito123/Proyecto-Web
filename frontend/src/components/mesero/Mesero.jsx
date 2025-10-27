@@ -1,16 +1,19 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 // Asumo que tu 'styles.css' se importa en un archivo superior como App.js o index.js
 // Si no, descomenta la siguiente línea:
 // import '../../styles.css'; 
 
-import HedearUsuarios from '../../components/common/HedearUsuarios.jsx';
+import HedearUsuarios from '../common/HedearUsuarios.jsx';
 
 // Puedes reemplazar estos íconos con los de una librería como React-Icons
 const IconoUsuario = () => '👤';
 const IconoDinero = () => '💲';
 const IconoReloj = () => '🕓';
 
-function Mesero() {
+function Mesero({ mesasActivas }) {
+  const navigate = useNavigate();
+
   return (
     <> 
       {/* El <div> principal DEBE tener la clase 'dashboard-frame'
@@ -70,10 +73,33 @@ function Mesero() {
           <section className="main-column">
             <div className="content-card">
               <h3><span role="img" aria-label="bandeja">🍽️</span> Mesas Activas</h3>
-              {/* Aquí iría tu componente de Tabla de Mesas */}
-              <p style={{ textAlign: 'center', padding: '20px' }}>
-                (Aquí va la tabla de mesas activas)
-              </p>
+              <table className="mesas-table">
+                <thead>
+                  <tr>
+                    <th># Mesa</th>
+                    <th>Comensales</th>
+                    <th>Estado</th>
+                    <th>Acciones</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {mesasActivas.map((mesa) => (
+                    <tr key={mesa.id}>
+                      <td><strong>{mesa.numero}</strong></td>
+                      <td>{mesa.comensales}</td>
+                      <td>
+                        <span className={`status-pill ${mesa.estado.toLowerCase()}`}>
+                          {mesa.estado}
+                        </span>
+                      </td>
+                      <td>
+                        <button className="action-button">Ver</button>
+                        <button className="action-button primary">Cobrar</button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
             </div>
           </section>
 
@@ -92,9 +118,9 @@ function Mesero() {
               <h3><span role="img" aria-label="rayo">⚡</span> Acciones Rápidas</h3>
               {/* Aquí irían tus botones de acción */}
               <div className="quick-actions-buttons">
-                <button>Asignar Mesa Nueva</button>
-                <button>Tomar Orden</button>
-                <button>Ver Reservaciones</button>
+                <button onClick={() => navigate('/asignar-mesa')}>Asignar Mesa Nueva</button>
+                <button onClick={() => navigate('/tomar-orden')}>Tomar Orden</button>
+                <button onClick={() => navigate('/ver-reservaciones')}>Ver Reservaciones</button>
               </div>
             </div>
 

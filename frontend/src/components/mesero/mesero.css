@@ -1,0 +1,304 @@
+.asignar-mesa-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px 20px;
+    background-color: #f4f4f4;
+    min-height: calc(100vh - 80px); /* Ajusta según la altura de tu header */
+}
+
+.asignar-mesa-form {
+    background: white;
+    padding: 40px;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+}
+
+.asignar-mesa-form h2 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 30px;
+}
+
+.asignar-mesa-form label {
+    display: block;
+    margin-bottom: 8px;
+    color: #555;
+    font-weight: bold;
+}
+
+.asignar-mesa-form input {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.btn-asignar {
+    width: 100%;
+    padding: 15px;
+    background-color: #28a745; /* Verde para acción positiva */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-bottom: 10px;
+}
+
+.btn-asignar:hover {
+    background-color: #218838;
+}
+
+.btn-cancelar {
+    width: 100%;
+    padding: 15px;
+    background-color: #6c757d; /* Gris para acción secundaria */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.btn-cancelar:hover {
+    background-color: #5a6268;
+}
+.mesero-dashboard-container {
+    padding: 40px 20px;
+    text-align: center;
+    max-width: 800px;
+    margin: 40px auto;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.mesero-dashboard-container h1 {
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.dashboard-button {
+    background-color: #8B4513; /* Un tono café siena, elegante */
+    color: white;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.dashboard-button:hover {
+    background-color: #A0522D; /* Un poco más claro al pasar el mouse */
+}
+.tomar-orden-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 40px 20px;
+    background-color: #f4f4f4;
+    min-height: calc(100vh - 80px);
+}
+
+.tomar-orden-form {
+    background: white;
+    padding: 40px;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 600px;
+}
+
+.tomar-orden-form h2, .tomar-orden-form h3 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.tomar-orden-form h3 {
+    margin-top: 30px;
+    border-top: 1px solid #eee;
+    padding-top: 20px;
+}
+
+.tomar-orden-form label {
+    display: block;
+    margin-bottom: 8px;
+    color: #555;
+    font-weight: bold;
+}
+
+.tomar-orden-form input {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.tomar-orden-form select {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    background-color: white; /* Asegura un fondo consistente */
+    font-size: 1rem; /* Coincide con el tamaño de fuente de los inputs */
+}
+
+.menu-disponible-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.platillo-btn {
+    background-color: #f8f9fa;
+    border: 1px solid #dee2e6;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.platillo-btn:hover {
+    background-color: #e9ecef;
+}
+
+.orden-actual-list {
+    background-color: #f9f9f9;
+    border-radius: 5px;
+    padding: 15px;
+    margin-bottom: 20px;
+    min-height: 50px;
+}
+
+.orden-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.orden-item:last-child {
+    border-bottom: none;
+}
+
+.orden-vacia {
+    text-align: center;
+    color: #888;
+}
+
+.btn-enviar-orden {
+    width: 100%;
+    padding: 15px;
+    background-color: #d1a337; /* Dorado */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-bottom: 10px;
+}
+
+.btn-enviar-orden:hover {
+    background-color: #b58423;
+}
+.reservaciones-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px 20px;
+    background-color: #f4f7f6;
+    min-height: calc(100vh - 80px);
+}
+
+.reservaciones-card {
+    background: white;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+    width: 100%;
+    max-width: 800px;
+}
+
+.reservaciones-card h2 {
+    text-align: center;
+    color: #1a202c;
+    margin-bottom: 10px;
+}
+
+.reservaciones-card p {
+    text-align: center;
+    color: #777;
+    margin-bottom: 30px;
+}
+
+.reservaciones-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 30px;
+}
+
+.reservaciones-table th, .reservaciones-table td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.reservaciones-table th {
+    background-color: #f8f9fa;
+    color: #343a40;
+    font-weight: 600;
+}
+
+.reservaciones-table tbody tr:hover {
+    background-color: #f1f3f5;
+}
+
+.status-confirmada {
+    background-color: #d1fae5;
+    color: #059669;
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.status-pendiente {
+    background-color: #fef3c7;
+    color: #d97706;
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.btn-regresar {
+    display: block;
+    width: 200px;
+    margin: 0 auto;
+    padding: 12px;
+    background-color: #6c757d;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    text-align: center;
+}
+
+.btn-regresar:hover {
+    background-color: #5a6268;
+}
