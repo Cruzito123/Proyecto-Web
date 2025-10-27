@@ -25,10 +25,6 @@ import VerReservaciones from './components/mesero/VerReservaciones';
 // - frontend/src/pages/public/Home.jsx
 // - frontend/src/pages/private/GestionPlatillos.jsx, etc.
 
-import Mesero from './pages/private/Mesero.jsx';
-import Chef from './pages/private/Chef.jsx';
-
-
 
 function App() {
   // 1. Estado centralizado para las mesas activas
