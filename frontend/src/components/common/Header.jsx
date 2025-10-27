@@ -49,7 +49,11 @@ function Header() {
         <>
             <header className="main-header">
                 <div className="logo-container">
+<<<<<<< HEAD
                     <Link to="/" className="site-name">Le Jardin Mexican</Link>
+=======
+                    <Link to="/" className="site-name">Le Jardine Mexicain</Link>
+>>>>>>> 2f16c965f0098efcf35ba5d5d42767e3c1d8b50f
                 </div>
 
                 <nav className="main-nav">
