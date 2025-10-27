@@ -11,7 +11,7 @@ const IconoUsuario = () => '👤';
 const IconoDinero = () => '💲';
 const IconoReloj = () => '🕓';
 
-function Mesero({ mesasActivas }) {
+function Mesero({ mesasActivas, ordenesListas, onEntregarOrden }) {
   const navigate = useNavigate();
 
   return (
@@ -108,10 +108,29 @@ function Mesero({ mesasActivas }) {
             
             <div className="content-card">
               <h3><span role="img" aria-label="ticket">🧾</span> Pedidos Pendientes</h3>
-              {/* Aquí iría tu componente de Pedidos */}
-              <p style={{ padding: '10px' }}>
-                (Contenido de pedidos pendientes...)
-              </p>
+              {ordenesListas && ordenesListas.length > 0 ? (
+                ordenesListas.map(orden => (
+                  <div key={orden.id} className="pedido-item">
+                    <div className="pedido-header">
+                      <span>Mesa #{orden.mesa}</span>
+                      <span className="pedido-status listo">Listo</span>
+                    </div>
+                    <ul className="pedido-platos">
+                      {orden.items.map(item => (
+                        <li key={item.id}>{item.cantidad}x {item.name}</li>
+                      ))}
+                    </ul>
+                    <button 
+                      className="entregar-button"
+                      onClick={() => onEntregarOrden(orden.id)}
+                    >
+                      Listo (Entregar)
+                    </button>
+                  </div>
+                ))
+              ) : (
+                <p style={{ textAlign: 'center', padding: '20px', color: '#888' }}>No hay pedidos listos para entregar.</p>
+              )}
             </div>
             
             <div className="content-card">

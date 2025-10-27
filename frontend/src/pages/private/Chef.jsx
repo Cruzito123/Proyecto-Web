@@ -12,7 +12,7 @@ const IconoAccion = () => '⚡';
 const IconoAlerta = () => '⚠️';
 
 
-function PanelChef({ ordenesPendientes = [] }) {
+function PanelChef({ ordenesPendientes = [], onCompletarOrden }) {
   // Estado para controlar la visibilidad del modal de bienvenida
   const [mostrarModal, setMostrarModal] = useState(true);
 
@@ -126,7 +126,7 @@ function PanelChef({ ordenesPendientes = [] }) {
                 </div>
                 <div className="chef-order-actions">
                   <button className="chef-btn-process">En Proceso</button>
-                  <button className="chef-btn-complete">Completar</button>
+                  <button className="chef-btn-complete" onClick={() => onCompletarOrden(orden.id)}>Completar</button>
                 </div>
               </div>
             ))

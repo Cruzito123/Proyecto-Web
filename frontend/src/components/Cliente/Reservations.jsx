@@ -2,20 +2,22 @@
 // frontend/src/pages/public/Reservations.jsx
 
 import React from 'react';
-import Header from '../../components/common/Header.jsx';
-import ReservationForm from '../../components/common/ReservationForm.jsx'; // Nuevo componente
-import Footer from '../../components/common/Footer.jsx';
+import { useNavigate } from 'react-router-dom';
+import ReservationForm from './ReservationForm.jsx'; // Componente del formulario de reservación
 
-function Reservations() {
-    // Función placeholder para manejar el envío (En el futuro, POST a Django)
+
+
+function Reservations({ onReservationSubmit }) {
+    const navigate = useNavigate();
+
     const handleReservationSubmit = (data) => {
-        console.log("RESERVACIÓN VALIDADA Y ENVIADA:", data);
-        alert("🎉 Reservación validada. (Pendiente envío a Django y correo)");
+        onReservationSubmit(data);
+        navigate('/cliente'); // Redirige al panel del cliente tras reservar
     };
 
     return (
         <>
-            <Header />
+            
             <main className="reservations-main-content">
                 <section className="reservation-hero-text">
                     <h1 className="page-title">Reservaciones</h1>
@@ -28,7 +30,7 @@ function Reservations() {
                     <ReservationForm onSubmit={handleReservationSubmit} />
                 </div>
             </main>
-            <Footer />
+            
         </>
     );
 }

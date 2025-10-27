@@ -5,19 +5,18 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 // Importar componentes de pages public
 import Home from './pages/public/Home.jsx'; 
 import Menu from './pages/public/Menu.jsx'; 
-import Reservations from './pages/public/Reservations.jsx';
 import Contact from './pages/public/Contact.jsx'; 
 
 import Reviews from './pages/public/Reviews.jsx'; 
 import LoyaltyProgram from './pages/public/LoyaltyProgram.jsx';
 import Events from './pages/public/Events.jsx';
-
-
+//Cliente
+import Cliente from './components/Cliente/cliente.jsx';
+import Reservations from './components/Cliente/Reservations.jsx';
 // Importar  vistas privates
 import GestionPlatillos from './pages/private/GestionPlatillos'; 
 import Mesero from './components/mesero/Mesero.jsx';
 import PanelChef from './pages/private/Chef.jsx';
-
 import AsignarMesa from './components/mesero/AsignarMesa.jsx';
 import TomarOrden from './components/mesero/TomarOrden';
 import VerReservaciones from './components/mesero/VerReservaciones';
@@ -34,6 +33,15 @@ function App() {
 
   // Estado para las órdenes pendientes para el chef
   const [ordenesPendientes, setOrdenesPendientes] = useState([]);
+
+  // Estado para las órdenes listas para entregar por el mesero
+  const [ordenesListas, setOrdenesListas] = useState([]);
+
+  // Estado para las reservaciones
+  const [reservaciones, setReservaciones] = useState([
+    { id: 1, nombre: "Carlos Santana", fecha: "2023-10-28", hora: "20:00", personas: 4, estado: "Confirmada" },
+    { id: 2, nombre: "Ana Martínez", fecha: "2023-10-28", hora: "20:30", personas: 2, estado: "Confirmada" },
+  ]);
 
   // 2. Función para agregar una nueva mesa al estado
   const handleAsignarMesa = (nuevaMesa) => {
@@ -54,6 +62,35 @@ function App() {
     setOrdenesPendientes(prevOrdenes => [...prevOrdenes, ordenConId]);
     alert(`Orden para la mesa ${nuevaOrden.mesa} enviada a cocina.`);
   };
+
+  // 4. Función para que el Chef marque una orden como completada
+  const handleCompletarOrden = (ordenId) => {
+    const ordenCompletada = ordenesPendientes.find(o => o.id === ordenId);
+    if (ordenCompletada) {
+      // Añade la orden a la lista de "listas para entregar"
+      setOrdenesListas(prevListas => [...prevListas, ordenCompletada]);
+      // Elimina la orden de la lista de "pendientes" del chef
+      setOrdenesPendientes(prevPendientes => prevPendientes.filter(o => o.id !== ordenId));
+    }
+  };
+
+  // 5. Función para que el Mesero marque una orden como entregada
+  const handleEntregarOrden = (ordenId) => {
+    // Elimina la orden de la lista de "listas para entregar"
+    setOrdenesListas(prevListas => prevListas.filter(o => o.id !== ordenId));
+    alert(`Orden de la mesa ${ordenesListas.find(o => o.id === ordenId)?.mesa} entregada.`);
+  };
+
+  // 6. Función para que el Cliente cree una nueva reservación
+  const handleNuevaReservacion = (nuevaReservacion) => {
+    const reservacionConId = {
+      ...nuevaReservacion,
+      id: Date.now(), // ID único
+      estado: 'Pendiente', // Estado inicial
+    };
+    setReservaciones(prevReservaciones => [...prevReservaciones, reservacionConId]);
+    alert(`¡Gracias por tu reservación, ${nuevaReservacion.nombre}! Está pendiente de confirmación.`);
+  };
   return (
     // <Router> (que es BrowserRouter) envuelve toda la aplicación
     <Router>
@@ -67,21 +104,21 @@ function App() {
 
           {/* VISTA PRIVADA (Admin) */}
           <Route path="/gestion-platillos" element={<GestionPlatillos />} />
+          <Route path='/cliente' element={<Cliente reservaciones={reservaciones} />} />
 
-
-          <Route path="/mesero" element={<Mesero mesasActivas={mesasActivas} />} />
+          <Route path="/mesero" element={<Mesero mesasActivas={mesasActivas} ordenesListas={ordenesListas} onEntregarOrden={handleEntregarOrden} />} />
           
           <Route path="/asignar-mesa" element={<AsignarMesa onMesaAsignada={handleAsignarMesa} mesasActivas={mesasActivas} />} />
           <Route path="/tomar-orden" element={<TomarOrden mesasActivas={mesasActivas} onNuevaOrden={handleNuevaOrden} />} />
-          <Route path="/ver-reservaciones" element={<VerReservaciones />} />
+          <Route path="/ver-reservaciones" element={<VerReservaciones reservaciones={reservaciones} />} />
 
-          <Route path="/chef" element={<PanelChef ordenesPendientes={ordenesPendientes} />} />
+          <Route path="/chef" element={<PanelChef ordenesPendientes={ordenesPendientes} onCompletarOrden={handleCompletarOrden} />} />
 
            <Route path="/resenas" element={<Reviews />} />
           
           <Route path="/menu" element={<Menu />} />
 
-          <Route path="/reservar" element={<Reservations />} />
+          <Route path="/reservar" element={<Reservations onReservationSubmit={handleNuevaReservacion} />} />
 
           <Route path="/lealtad" element={<LoyaltyProgram />} />
 

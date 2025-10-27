@@ -4,11 +4,27 @@ import { Link } from 'react-router-dom';
 function LoginModal({ onClose, onLoginSuccess }) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [passwordError, setPasswordError] = useState('');
     const [role, setRole] = useState('cliente');
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        // Aquí podrías validar o conectar con backend
+        setPasswordError(''); // Limpiar error previo
+
+        // 1. Validación de longitud
+        if (password.length <= 6) {
+            setPasswordError('La contraseña debe tener más de 6 caracteres.');
+            return;
+        }
+
+        // 2. Validación de carácter especial
+        const specialCharRegex = /[!@#$%^&*(),.?":{}|<>]/;
+        if (!specialCharRegex.test(password)) {
+            setPasswordError('La contraseña debe contener al menos un carácter especial (ej: !@#$).');
+            return;
+        }
+
+        // Si todas las validaciones pasan:
         onLoginSuccess(role);
     };
 
@@ -36,6 +52,7 @@ function LoginModal({ onClose, onLoginSuccess }) {
                         placeholder="•••••••"
                         required
                     />
+                    {passwordError && <p className="error-message">{passwordError}</p>}
 
                     <label>Tipo de Usuario</label>
                     <select value={role} onChange={(e) => setRole(e.target.value)}>
@@ -47,7 +64,7 @@ function LoginModal({ onClose, onLoginSuccess }) {
 
                     <button type="submit" className="btn-login">Iniciar Sesión</button>
                 </form>
-
+                
                 {/* 🔹 Texto de registro abajo */}
                 <p className="register-text">
                     ¿No tienes cuenta?{' '}
@@ -55,6 +72,7 @@ function LoginModal({ onClose, onLoginSuccess }) {
                         Regístrate aquí
                     </Link>
                 </p>
+                
             </div>
         </div>
     );

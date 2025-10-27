@@ -35,9 +35,10 @@ function Header() {
                 navigate('/chef');
                 break;
             case 'cliente':
-            default:
-                // Para el cliente, no hacemos nada y se queda en la página actual.
+                navigate('/cliente');
                 break;
+            default:
+                navigate('/');
         }
     };
 
@@ -56,7 +57,6 @@ function Header() {
                     <ul>
                         <li><Link to="/" className={location.pathname === '/' ? 'active-link' : ''}>Inicio</Link></li>
                         <li><Link to="/menu" className={location.pathname === '/menu' ? 'active-link' : ''}>Menú</Link></li>
-                        <li><Link to="/reservar" className={location.pathname === '/reservar' ? 'active-link' : ''}>Reservaciones</Link></li>
                         <li><Link to="/eventos" className={location.pathname === '/eventos' ? 'active-link' : ''}>Eventos</Link></li>
                         <li><Link to="/resenas" className={location.pathname === '/resenas' ? 'active-link' : ''}>Reseñas</Link></li>
                         <li><Link to="/lealtad" className={location.pathname === '/lealtad' ? 'active-link' : ''}>Lealtad</Link></li>
