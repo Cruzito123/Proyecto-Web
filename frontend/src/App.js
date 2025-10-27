@@ -15,6 +15,7 @@ import Events from './pages/public/Events.jsx';
 
 // Importar  vistas privates
 import GestionPlatillos from './pages/private/GestionPlatillos'; 
+import Mesero from './pages/private/Mesero.jsx';
 // Asegúrate de crear estos archivos en las rutas indicadas:
 // - frontend/src/pages/public/Home.jsx
 // - frontend/src/pages/private/GestionPlatillos.jsx, etc.
@@ -33,6 +34,7 @@ function App() {
 
           {/* VISTA PRIVADA (Admin) */}
           <Route path="/gestion-platillos" element={<GestionPlatillos />} />
+          <Route path="/mesero" element={<Mesero />} />
 
            <Route path="/resenas" element={<Reviews />} />
           

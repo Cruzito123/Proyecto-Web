@@ -3,7 +3,7 @@ import React from 'react';
 import Header from '../../components/common/Header.jsx'; 
 import MisionVision from '../../components/common/MisionVision.jsx'; // Contiene Misión y Visión
 import Valores from '../../components/common/Valores.jsx'; // Contiene la lista de valores
-
+import Footer from '../../components/common/Footer.jsx';
 function Home() {
     return (
         <div>
@@ -24,7 +24,7 @@ function Home() {
                 <Valores />
                 
                 {/* Aquí irán las secciones de Contacto, Menú Destacado, etc. */}
-                
+                <Footer />
             </main>
         </div>
     );

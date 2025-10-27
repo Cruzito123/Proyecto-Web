@@ -5,6 +5,7 @@ import React from 'react';
 import Header from '../../components/common/Header.jsx';
 import NewsletterForm from '../../components/common/NewsletterForm.jsx'; // Nuevo componente
 import EventCard from '../../components/common/EventCard.jsx'; // Nuevo componente
+import Footer from '../../components/common/Footer.jsx';
 
 // Datos de prueba simulados (MOCK_EVENTS)
 const MOCK_EVENTS = [
@@ -41,6 +42,7 @@ function Events() {
                     <NewsletterForm onSubmit={handleSubscriptionSubmit} />
                 </section>
             </main>
+            <Footer />
         </>
     );
 }

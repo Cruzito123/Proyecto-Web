@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import Header from '../../components/common/Header.jsx';
 import ReviewForm from '../../components/common/ReviewForm.jsx';
+import Footer from '../../components/common/Footer.jsx';
 
 // Datos simulados (En el futuro, esto vendrá de Django API)
 const MOCK_REVIEWS = [
@@ -80,6 +81,7 @@ function Reviews() {
                 </div>
 
             </main>
+            <Footer />
         </>
     );
 }

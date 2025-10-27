@@ -4,6 +4,7 @@
 import React from 'react';
 import Header from '../../components/common/Header.jsx';
 import LoyaltyForm from '../../components/common/LoyaltyForm.jsx'; // Nuevo componente
+import Footer from '../../components/common/Footer.jsx';
 
 function LoyaltyProgram() {
     // Función placeholder para manejar el envío (En el futuro, POST a Django)
@@ -26,6 +27,7 @@ function LoyaltyProgram() {
                     <LoyaltyForm onSubmit={handleLoyaltySubmit} />
                 </div>
             </main>
+            <Footer />
         </>
     );
 }

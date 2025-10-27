@@ -1,7 +1,7 @@
 // frontend/src/pages/private/GestionPlatillos.jsx
 
 import React from 'react';
-import Header from '../../components/common/Header.jsx'; // Necesita el Header
+
 import AltaPlatillo from '../../components/admin/AltaPlatillo.jsx';
 import ModificarPlatillo from '../../components/admin/ModificarPlatillo.jsx';
 import BajaPlatillo from '../../components/admin/BajaPlatillo.jsx';
@@ -14,7 +14,6 @@ function GestionPlatillos() {
 
     return (
         <>
-            <Header /> 
             <main className="gestion-main-content">
                 <h1 className="page-title">Gestión de Platillos</h1>
                 

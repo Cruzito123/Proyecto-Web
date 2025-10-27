@@ -5,6 +5,7 @@ import React, { useState } from 'react';
 import Header from '../../components/common/Header.jsx'; 
 import PlatilloCard from '../../components/common/PlatilloCard.jsx'; // Nuevo componente
 import MenuFilterButton from '../../components/common/MenuFilterButton.jsx'; // Nuevo componente
+import Footer from '../../components/common/Footer.jsx';
 
 // Datos de prueba (MOCK_PLATILLOS) - En el futuro, esto vendrá de Django API
 const MOCK_PLATILLOS = [
@@ -59,6 +60,7 @@ function Menu() {
                 
                 {filteredPlatillos.length === 0 && <p style={{textAlign: 'center', gridColumn: '1 / -1'}}>No hay platillos disponibles en esta categoría.</p>}
             </main>
+            <Footer />
         </>
     );
 }

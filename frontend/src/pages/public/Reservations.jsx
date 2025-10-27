@@ -4,6 +4,7 @@
 import React from 'react';
 import Header from '../../components/common/Header.jsx';
 import ReservationForm from '../../components/common/ReservationForm.jsx'; // Nuevo componente
+import Footer from '../../components/common/Footer.jsx';
 
 function Reservations() {
     // Función placeholder para manejar el envío (En el futuro, POST a Django)
@@ -27,6 +28,7 @@ function Reservations() {
                     <ReservationForm onSubmit={handleReservationSubmit} />
                 </div>
             </main>
+            <Footer />
         </>
     );
 }

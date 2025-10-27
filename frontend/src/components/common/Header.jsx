@@ -1,73 +1,98 @@
-
-import React, { useState } from 'react'; // para actualizar dats
-import { Link, useLocation } from 'react-router-dom'; //  para saber qué enlace está activo
+import React, { useState } from 'react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import LoginModal from './LoginModal'; // Importamos el componente del modal
 
 function Header() {
-    // Usamos useLocation para determinar qué ruta está activa y aplicar el estilo dorado
     const location = useLocation();
-
-    // Lógica simulada de autenticación y roles:
     const [isLoggedIn, setIsLoggedIn] = useState(false);
-    const [userRole, setUserRole] = useState('cliente'); // Puede ser 'cliente', 'admin', 'mesero'
+    const navigate = useNavigate();
+    const [userRole, setUserRole] = useState('cliente');
+    const [showLoginModal, setShowLoginModal] = useState(false); // controla si se muestra el modal
 
     const handleLoginClick = () => {
-        // Por ahora, solo simula el login
-        setIsLoggedIn(true);
-        setUserRole('admin'); // Simulamos que el usuario es un administrador
-        // En el futuro, aquí iría la lógica para mostrar el modal de Login
+        setShowLoginModal(true); // abre el modal
     };
-    
+
     const handleLogout = () => {
         setIsLoggedIn(false);
         setUserRole('cliente');
     };
 
+    const handleLoginSuccess = (role) => {
+        setIsLoggedIn(true);
+        setUserRole(role);
+        setShowLoginModal(false); // cierra el modal al iniciar sesión
+
+        // Lógica de redirección según el rol
+        switch (role) {
+            case 'admin':
+                navigate('/gestion-platillos');
+                break;
+            case 'mesero':
+                navigate('/mesero'); // Redirige al dashboard del mesero
+                break;
+            case 'chef':
+                navigate('/chef');
+                break;
+            case 'cliente':
+            default:
+                // Para el cliente, no hacemos nada y se queda en la página actual.
+                break;
+        }
+    };
+
+    const handleCloseModal = () => {
+        setShowLoginModal(false);
+    };
 
     return (
-        <header className="main-header">
-            {/* LOGO y NOMBRE */}
-            <div className="logo-container">
-                {/* ICONO DEL CHEF O EL LOGO AQUÍ */}
-                <Link to="/" className="site-name">Le Jardine Mexican </Link>
-            </div>
+        <>
+            <header className="main-header">
+                <div className="logo-container">
+                    <Link to="/" className="site-name">La Belle Époque</Link>
+                </div>
 
-            {/* ENLACES DE NAVEGACIÓN */}
-            <nav className="main-nav">
-                <ul>
-                    {/* El 'active-link' es lo que le da la línea dorada al enlace activo */}
-                    <li><Link to="/" className={location.pathname === '/' ? 'active-link' : ''}>Inicio</Link></li>
-                    <li><Link to="/menu" className={location.pathname === '/menu' ? 'active-link' : ''}>Menú</Link></li>
-                    <li><Link to="/reservar" className={location.pathname === '/reservar' ? 'active-link' : ''}>Reservaciones</Link></li>
-                    <li><Link to="/eventos" className={location.pathname === '/eventos' ? 'active-link' : ''}>Eventos</Link></li>
-                    <li><Link to="/resenas" className={location.pathname === '/resenas' ? 'active-link' : ''}>Reseñas</Link></li>
-                    <li><Link to="/lealtad" className={location.pathname === '/lealtad' ? 'active-link' : ''}>Lealtad</Link></li>
-                    <li><Link to="/contacto" className={location.pathname === '/contacto' ? 'active-link' : ''}>Contacto</Link></li>
-                
-                
-                {/* VISIBILIDAD CONDICIONAL para el Admin */}
-                    {isLoggedIn && userRole === 'admin' && (
-                        <li>
-                            <Link to="/gestion-platillos" className={location.pathname === '/gestion-platillos' ? 'active-link' : ''}>
-                                Gestión de Platillos
-                            </Link>
-                        </li>
+                <nav className="main-nav">
+                    <ul>
+                        <li><Link to="/" className={location.pathname === '/' ? 'active-link' : ''}>Inicio</Link></li>
+                        <li><Link to="/menu" className={location.pathname === '/menu' ? 'active-link' : ''}>Menú</Link></li>
+                        <li><Link to="/reservar" className={location.pathname === '/reservar' ? 'active-link' : ''}>Reservaciones</Link></li>
+                        <li><Link to="/eventos" className={location.pathname === '/eventos' ? 'active-link' : ''}>Eventos</Link></li>
+                        <li><Link to="/resenas" className={location.pathname === '/resenas' ? 'active-link' : ''}>Reseñas</Link></li>
+                        <li><Link to="/lealtad" className={location.pathname === '/lealtad' ? 'active-link' : ''}>Lealtad</Link></li>
+                        <li><Link to="/contacto" className={location.pathname === '/contacto' ? 'active-link' : ''}>Contacto</Link></li>
+
+                        {isLoggedIn && userRole === 'admin' && (
+                            <li>
+                                <Link to="/gestion-platillos" className={location.pathname === '/gestion-platillos' ? 'active-link' : ''}>
+                                    Gestión de Platillos
+                                </Link>
+                            </li>
+                        )}
+                    </ul>
+                </nav>
+
+                <div>
+                    {isLoggedIn ? (
+                        <button onClick={handleLogout} className="login-button">
+                            Cerrar Sesión ({userRole})
+                        </button>
+                    ) : (
+                        <button onClick={handleLoginClick} className="login-button">
+                            Iniciar Sesión
+                        </button>
                     )}
-                
-                </ul>
-            </nav>
-            
-            {/* BOTÓN DE ACCIÓN (LOGIN/ADMIN) */}
-            <div>
-                {isLoggedIn ? (
-                    // Si el usuario está logueado
-                    <button onClick={handleLogout} className="login-button">Cerrar Sesión ({userRole})</button>
-                ) : (
-                    // Si el usuario no está logueado
-                    <button onClick={handleLoginClick} className="login-button">Iniciar Sesión</button>
-                )}
-            </div>
+                </div>
+            </header>
 
-        </header>
+            {/* Modal de login */}
+            {showLoginModal && (
+                <LoginModal
+                    onClose={handleCloseModal}
+                    onLoginSuccess={handleLoginSuccess}
+                />
+            )}
+        </>
     );
 }
 
