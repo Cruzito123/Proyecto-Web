@@ -26,9 +26,10 @@ class RegisterView(APIView):
         serializer = UsuarioSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
-            return Response({"mensaje": "Usuario creado correctamente"})
+            # MODIFICACIÓN: Retorna los datos serializados del usuario (el "frame") 
+            # con el código de estado HTTP 201 (Created).
+            return Response(serializer.data, status=201) 
         return Response(serializer.errors, status=400)
-
 
 class LoginView(APIView):
     def post(self, request):
