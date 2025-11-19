@@ -53,7 +53,7 @@ function Header() {
 
                     <Link to="/" className="site-name">Le Jardin Mexican</Link>
 
-                    <Link to="/" className="site-name">Le Jardine Mexicain</Link>
+                   
 
                 </div>
 
