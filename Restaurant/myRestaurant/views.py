@@ -36,18 +36,34 @@ class LoginView(APIView):
         correo = request.data.get("correo")
         contrasena = request.data.get("contrasena")
 
+        # 👈 DEBUG 1: Muestra los datos de entrada
+        print(f"\n--- INICIO DE LOGIN ---")
+        print(f"Correo recibido: '{correo}'")
+        print(f"Contraseña recibida: '{contrasena}'") # 👈 ¡Revisa si hay espacios aquí!
+
         try:
             user = Usuario.objects.get(correo=correo)
         except Usuario.DoesNotExist:
             return Response({"error": "Usuario no encontrado"}, status=404)
 
-        if not check_password(contrasena, user.contrasena):
-            return Response({"error": "Contraseña incorrecta"}, status=400)
+        # 👈 DEBUG 2: Muestra el hash de la DB
+        print(f"Usuario encontrado: {user.nombre}")
+        print(f"Hash en DB: {user.contrasena}")
 
-        return Response({
-            "mensaje": "Login correcto",
-            "usuario": UsuarioSerializer(user).data
-        })
+        # Compara la contraseña en texto plano con el hash de la DB
+        if check_password(contrasena, user.contrasena):
+            # ✅ ÉXITO
+            print("✅ check_password ÉXITO: Login correcto.")
+            print(f"--- FIN DE LOGIN ---\n")
+            return Response({
+                "mensaje": "Login correcto",
+                "usuario": UsuarioSerializer(user).data
+            })
+        else:
+            # ❌ FALLO
+            print("❌ check_password FALLÓ: Contraseña no coincide.")
+            print(f"--- FIN DE LOGIN ---\n")
+            return Response({"error": "Credenciales incorrectas"}, status=400)
 
 
 # -----------------------

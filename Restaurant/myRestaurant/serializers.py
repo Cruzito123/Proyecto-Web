@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from .models import *
+from django.contrib.auth.hashers import make_password # Importación necesaria para el hasheo
 
 class UsuarioSerializer(serializers.ModelSerializer):
     class Meta:
@@ -8,14 +9,24 @@ class UsuarioSerializer(serializers.ModelSerializer):
         extra_kwargs = {
             'contrasena': {'write_only': True}
         }
-
-def create(self, validated_data):
-    from django.contrib.auth.hashers import make_password
-    print("Datos validados:", validated_data)  # <-- ver qué llega
-    validated_data['contrasena'] = make_password(validated_data['contrasena'])
-    usuario = super().create(validated_data)
-    print("Usuario creado:", usuario)          # <-- ver si realmente se crea
-    return usuario
+    
+    # 💥 ESTE ES EL MÉTODO CORREGIDO Y ROBUSTO PARA HASHEAR 💥
+    def create(self, validated_data):
+        
+        # Saca la contraseña del diccionario de datos validados para que no se guarde en texto plano
+        password_plano = validated_data.pop('contrasena') 
+        
+        # Crea el objeto Usuario usando todos los demás campos
+        usuario = Usuario.objects.create(**validated_data)
+        
+        # Hashea la contraseña y la guarda explícitamente en el objeto Usuario
+        usuario.contrasena = make_password(password_plano)
+        usuario.save()
+        
+        # Muestra una señal clara de que el hasheo funcionó
+        print("✅ HASHEO EXITOSO. Contraseña hasheada guardada:", usuario.contrasena) 
+        
+        return usuario
 
 
 class PlatilloSerializer(serializers.ModelSerializer):
