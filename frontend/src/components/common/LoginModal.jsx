@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 // URL base de tu API de Django
-const API_URL = "http://localhost:8000";
+const API_URL = "http://localhost:8000/api";
 
 /* ----------------------------------------
    MODAL DE REGISTRO (CON DJANGO)
@@ -51,9 +51,9 @@ function RegisterModal({ onClose }) {
                 },
                 body: JSON.stringify({
                     nombre: form.nombre,
-                    correo: form.email,   // Django espera este nombre
-                    password: form.password,
-                    rol: form.role
+                    correo: form.email,          // ✔ correcto
+                    contrasena: form.password,    // ✔ Django espera "contrasena"
+                    tipo_usuario: form.role       // ✔ Django espera "tipo_usuario"
                 }),
             });
 
@@ -143,12 +143,6 @@ function LoginModal({ onClose, onLoginSuccess }) {
         setPasswordError("");
         setLoginError("");
 
-        // Validación rápida
-        if (password.length <= 6) {
-            setPasswordError("La contraseña debe tener más de 6 caracteres.");
-            return;
-        }
-
         try {
             const res = await fetch(`${API_URL}/login/`, {
                 method: "POST",
@@ -156,9 +150,9 @@ function LoginModal({ onClose, onLoginSuccess }) {
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify({
-                    correo: email,
-                    password: password,
-                    rol: role
+                    correo: email,          // ✔ correcto
+                    contrasena: password,   // ✔ Django espera "contrasena"
+                    tipo_usuario: role      // ✔ Django espera "tipo_usuario"
                 })
             });
 
@@ -169,10 +163,8 @@ function LoginModal({ onClose, onLoginSuccess }) {
                 return;
             }
 
-            // Puedes guardar token o info en localStorage:
             localStorage.setItem("token", data.token || "");
 
-            // Enviar rol al componente padre
             onLoginSuccess(role);
             onClose();
 

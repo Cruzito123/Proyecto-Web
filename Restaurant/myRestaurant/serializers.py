@@ -9,11 +9,13 @@ class UsuarioSerializer(serializers.ModelSerializer):
             'contrasena': {'write_only': True}
         }
 
-    # HASH de contraseña
-    def create(self, validated_data):
-        from django.contrib.auth.hashers import make_password
-        validated_data['contrasena'] = make_password(validated_data['contrasena'])
-        return super().create(validated_data)
+def create(self, validated_data):
+    from django.contrib.auth.hashers import make_password
+    print("Datos validados:", validated_data)  # <-- ver qué llega
+    validated_data['contrasena'] = make_password(validated_data['contrasena'])
+    usuario = super().create(validated_data)
+    print("Usuario creado:", usuario)          # <-- ver si realmente se crea
+    return usuario
 
 
 class PlatilloSerializer(serializers.ModelSerializer):

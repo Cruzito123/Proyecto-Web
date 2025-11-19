@@ -2,6 +2,7 @@ from rest_framework import generics
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from django.contrib.auth.hashers import check_password
+from django.http import JsonResponse
 from .models import *
 from .serializers import *
 from .serializers import (
@@ -17,6 +18,8 @@ from .serializers import (
 # -----------------------
 # AUTH: Login / Registro
 # -----------------------
+def home(request):
+    return JsonResponse({"status": "API funcionando"})
 
 class RegisterView(APIView):
     def post(self, request):
