@@ -16,8 +16,11 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from myRestaurant.views import home
 
 urlpatterns = [
+    path('', home, name='home'),   # 👈 ESTA ES LA RUTA DE /
     path('admin/', admin.site.urls),
-    path('', include('myRestaurant.urls')),  #Ruta para la app
+    path('api/', include('myRestaurant.urls')),
 ]
+
