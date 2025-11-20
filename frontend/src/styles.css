@@ -2077,26 +2077,148 @@ body, html {
     justify-content: flex-end;
   }
 }
-.form-row {
-    display: flex;
+/* --- ESTILOS MODAL NUEVO EMPLEADO (Tipo Captura) --- */
+
+/* Contenedor más ancho para dos columnas */
+.modal-wide {
+  max-width: 800px;
+  width: 90%;
+  padding: 0; /* Quitamos padding general para manejarlo por secciones */
+  overflow: hidden; /* Para que el header/footer respeten bordes */
+}
+
+/* Header del Modal */
+.modal-header {
+  padding: 20px 30px;
+  border-bottom: 1px solid #eee;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #fff;
+}
+
+.modal-title {
+  margin: 0;
+  font-size: 1.5rem;
+  color: #333;
+}
+
+.close-btn-icon {
+  background: none;
+  border: none;
+  font-size: 2rem;
+  color: #999;
+  cursor: pointer;
+  line-height: 1;
+}
+.close-btn-icon:hover { color: #333; }
+
+/* Cuerpo del formulario (Grid de 2 columnas) */
+.modal-body-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* Dos columnas iguales */
+  gap: 40px;
+  padding: 30px;
+  background-color: #fcfcfc;
+}
+
+.section-title {
+  font-size: 1.1rem;
+  color: #d1a337; /* Color dorado/naranja del tema */
+  margin-bottom: 20px;
+  border-bottom: 2px solid #eee;
+  padding-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Inputs y Labels */
+.input-group {
+  margin-bottom: 15px;
+}
+
+.input-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: 600;
+  color: #555;
+  font-size: 0.9rem;
+}
+
+.input-field {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  transition: border-color 0.2s;
+  background-color: #fff;
+}
+
+.input-field:focus {
+  border-color: #d1a337;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(209, 163, 55, 0.1);
+}
+
+/* Filas compactas para inputs cortos (Salario, Puesto, etc) */
+.form-row-compact {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+}
+
+/* Grupo destacado (Contraseña) */
+.highlight-group {
+  background-color: #fff3cd;
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid #ffeeba;
+}
+
+/* Pie de página con botones */
+.modal-footer {
+  padding: 20px 30px;
+  background-color: #fff;
+  border-top: 1px solid #eee;
+  display: flex;
+  justify-content: flex-end;
+  gap: 15px;
+}
+
+/* Botones */
+.btn-cancel {
+  background-color: #f1f1f1;
+  color: #555;
+  border: 1px solid #ddd;
+  padding: 10px 20px;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.btn-cancel:hover { background-color: #e2e2e2; }
+
+.btn-create {
+  background-color: #d1a337;
+  color: white;
+  border: none;
+  padding: 10px 25px;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.btn-create:hover { background-color: #b58b2a; }
+
+/* Responsive: En móviles, una sola columna */
+@media (max-width: 768px) {
+  .modal-body-grid {
+    grid-template-columns: 1fr;
     gap: 20px;
-    margin-bottom: 15px;
-}
-
-.form-group {
-    flex: 1;
-}
-
-.form-group label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: 600;
-}
-
-/* Ajustes para inputs y selects dentro del modal */
-.admin-form input, .admin-form select {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+  }
+  .modal-wide {
+    width: 95%;
+    max-height: 90vh;
+    overflow-y: auto;
+  }
 }

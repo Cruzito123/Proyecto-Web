@@ -43,13 +43,26 @@ function GestionEmpleados() {
   const [showAddModal, setShowAddModal] = useState(false);
   const [editingEmployee, setEditingEmployee] = useState(null); // 👈 2. ESTADO PARA EL EMPLEADO EN EDICIÓN
 
-  // 1. CARGAR DATOS
+// 1. CARGAR EMPLEADOS (READ) - CON FILTRO ESPECÍFICO
   const fetchEmployees = async () => {
     try {
       const response = await fetch(API_URL);
-      if (!response.ok) throw new Error("Error al cargar");
+      if (!response.ok) throw new Error("Error al cargar empleados");
       const data = await response.json();
-      const staff = data.filter(user => user.tipo_usuario !== 'cliente'); 
+      
+      // ✅ FILTRO ACTUALIZADO: Solo mostramos Admin, Chef y Mesero
+      const staff = data.filter(user => {
+        // Normalizamos a minúsculas para evitar errores (ej: "Chef" vs "chef")
+        const tipo = user.tipo_usuario ? user.tipo_usuario.toLowerCase() : '';
+        const puesto = user.puesto ? user.puesto.toLowerCase() : '';
+
+        // LA LÓGICA:
+        // 1. Si el tipo_usuario es 'admin', pasa.
+        // 2. Si el puesto contiene la palabra 'chef' (ej: "Chef Ejecutivo"), pasa.
+        // 3. Si el puesto contiene la palabra 'mesero', pasa.
+        return tipo === 'admin' || puesto.includes('chef') || puesto.includes('mesero');
+      });
+
       setEmployees(staff);
     } catch (err) {
       console.error(err);

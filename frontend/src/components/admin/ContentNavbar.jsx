@@ -25,12 +25,12 @@ function ContentNavbar() {
                 {/* 2. Gestión de Pedidos (Ejemplo) */}
                 <li>
                     <NavLink 
-                        to="/gestion-pedidos" 
+                        to="/gestion-Clientes"
                         className={({ isActive }) => 
                             isActive ? "nav-link-content-admin active-content-nav" : "nav-link-content-admin"
                         }
                     >
-                        Gestión de Empleados
+                        Gestión de Clientes
                     </NavLink>
                 </li>
 
@@ -42,7 +42,7 @@ function ContentNavbar() {
                             isActive ? "nav-link-content-admin active-content-nav" : "nav-link-content-admin"
                         }
                     >
-                        Gestión de Usuarios
+                        Gestión de Empleados
                     </NavLink>
                 </li>
 

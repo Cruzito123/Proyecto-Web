@@ -20,6 +20,7 @@ import AsignarMesa from './components/mesero/AsignarMesa.jsx';
 import TomarOrden from './components/mesero/TomarOrden';
 import VerReservaciones from './components/mesero/VerReservaciones';
 import GestionEmpleados from './components/admin/GestionEmpleados.jsx';
+import GestionClientes from './components/admin/GestionarClientes.jsx';
 // Asegúrate de crear estos archivos en las rutas indicadas:
 // - frontend/src/pages/public/Home.jsx
 // - frontend/src/pages/private/GestionPlatillos.jsx, etc.
@@ -108,6 +109,7 @@ function App() {
           <Route path="/gestion-platillos" element={<GestionPlatillos />} />
           <Route path='/cliente' element={<Cliente reservaciones={reservaciones} />} />
           <Route path="/gestion-empleados" element={<GestionEmpleados />} />
+          <Route path="/gestion-clientes" element={<GestionClientes />} />
           {/* VISTA PRIVADA (Mesero) */}    
           <Route path="/mesero" element={<Mesero mesasActivas={mesasActivas} ordenesListas={ordenesListas} onEntregarOrden={handleEntregarOrden} />} />
           
