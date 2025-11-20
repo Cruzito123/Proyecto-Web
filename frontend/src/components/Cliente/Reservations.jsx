@@ -13,11 +13,11 @@ function Reservations() {
     const handleReservationSuccess = () => {
         // Podemos mostrar un mensaje o redirigir automáticamente
         setTimeout(() => {
-            navigate('/cliente'); // Redirige al panel del cliente tras reservar
-        }, 2000); // Espera 2 segundos para que el usuario vea el mensaje de éxito
+            navigate('/cliente'); 
+        }, 2000); 
     };
 
-    // Opcional: Si quieres mantener alguna funcionalidad adicional
+
     const handleReservationSubmit = (data) => {
         console.log('Reservación procesada:', data);
         // Aquí podrías agregar lógica adicional si necesitas
