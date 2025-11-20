@@ -51,6 +51,7 @@ class PlatilloSerializer(serializers.ModelSerializer):
         
         return instance
 
+# En serializers.py - ACTUALIZA el ReservacionSerializer
 class ReservacionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Reservacion
