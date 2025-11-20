@@ -133,7 +133,7 @@ function RegisterModal({ onClose }) {
                         <option value="cliente">Cliente</option>
                         <option value="mesero">Mesero</option>
                         <option value="chef">Cocinero</option>
-                        <option value="admin">Administrador</option>
+                        
                     </select>
 
                     {errorMsg && <p className="error-message">{errorMsg}</p>}

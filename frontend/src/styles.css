@@ -1793,9 +1793,11 @@ body, html {
   .chef-main-content-layout {
     grid-template-columns: 1fr;
   }
+
 }
 /* ----------------------------------------
    ESTILOS PARA HEADERS DE USUARIOS (DASHBOARD)
+   (HedearUsuarios.jsx)
 -----------------------------------------*/
 .dashboard-header {
     background-color: #333; /* Fondo oscuro (gris carbón) */
@@ -1806,7 +1808,6 @@ body, html {
     align-items: center;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     width: 100%;
-    /* Asegura que el header esté en la parte superior del dashboard */
     position: sticky; 
     top: 0;
     z-index: 1000;
@@ -1834,7 +1835,7 @@ body, html {
 .user-welcome-msg {
     font-size: 1.1em;
     font-weight: 500;
-    color: #ffd700; /* Color dorado para resaltar el saludo */
+    color: #d1a337; /* Usando tu color dorado */
 }
 
 .btn-logout-custom {
@@ -1852,16 +1853,44 @@ body, html {
 .btn-logout-custom:hover {
     background-color: #c62828; /* Rojo más oscuro al pasar el ratón */
 }
-
-/* Opcional: Estilo para los enlaces de navegación si decides agregar más */
-.user-nav-links a {
-    color: #ddd;
-    text-decoration: none;
-    padding: 5px 10px;
-    border-radius: 4px;
-    transition: background-color 0.2s;
+/* ----------------------------------------
+   ESTILOS DE BARRA DE NAVEGACIÓN SECUNDARIA (Admin/Dashboard)
+-----------------------------------------*/
+.content-navbar-admin {
+    background-color: #1a202c; /* Fondo oscuro, similar al header principal */
+    width: 100%;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    margin-bottom: 20px; /* Espacio debajo de la barra */
 }
 
-.user-nav-links a:hover {
-    background-color: #555;
+.nav-list-content-admin {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    /* Centrar la lista dentro de un contenedor si es necesario, si no, usar full width */
+    max-width: 1300px; 
+    margin: 0 auto;
+}
+
+.nav-link-content-admin {
+    display: block;
+    padding: 15px 25px;
+    color: #FFFFFF; /* Texto blanco */
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 1em;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.nav-link-content-admin:hover {
+    background-color: #2c3a4f; /* Fondo ligeramente más claro al pasar el ratón */
+    color: #FFFFFF;
+}
+
+/* Estilo para el enlace activo (el que está seleccionado) */
+.active-content-nav {
+    color: #d1a337; /* Color Dorado para el activo */
+    border-bottom: 3px solid #d1a337;
+    background-color: #111a27; /* Fondo más oscuro para el activo */
 }
