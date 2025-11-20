@@ -91,7 +91,7 @@ function GestionPlatillos() {
             <ContentNavbar />
             
             <main className="gestion-main-content">
-                <h1 className="page-title">Gestión de Platillos</h1>
+                
                 
                 {/* 📢 Mensaje de estado (éxito o error) */}
                 {message && (
