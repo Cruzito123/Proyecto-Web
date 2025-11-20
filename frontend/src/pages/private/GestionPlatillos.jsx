@@ -89,9 +89,9 @@ function GestionPlatillos() {
             
             {/* 2. Barra de Navegación Secundaria */}
             
-            
+           
             <main className="gestion-main-content">
-            <ContentNavbar />
+             <ContentNavbar />
                 
                 {/* 📢 Mensaje de estado (éxito o error) */}
                 {message && (

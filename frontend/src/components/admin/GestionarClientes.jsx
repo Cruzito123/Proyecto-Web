@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import HeaderUsers from '../../components/common/HeaderUsers';
 import EditClientModal from '../../components/admin/EditClientModal';
 import '../../styles.css';
+import ContentNavbar from './ContentNavbar';
 
 const API_URL = "http://127.0.0.1:8000/api/usuarios/";
 
@@ -100,6 +101,7 @@ function GestionClientes() {
       <HeaderUsers />
 
       <main className="gestion-empleados-content">
+        <ContentNavbar />
         <div className="section-header-card">
           <div className="header-title-group">
             <h2><span role="img" aria-label="client">👤</span> Gestión de Clientes</h2>

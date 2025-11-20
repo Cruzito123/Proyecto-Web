@@ -1,77 +1,97 @@
-// frontend/src/components/admin/AltaPlatillo.jsx
-
-import React from 'react';
-import { useForm } from 'react-hook-form';
+import React, { useState } from 'react';
 
 function AltaPlatillo({ onSubmit }) {
-    // Inicializa React Hook Form
-    const { register, handleSubmit, formState: { errors }, reset } = useForm();
-    
-    // Función que se ejecuta SOLO si la validación del formulario es exitosa
-    const handleLocalSubmit = (data) => {
-        onSubmit(data); // Envía los datos validados al componente padre
-        alert("🎉 ¡Formulario de Alta Validado! Datos listos para la API.");
-        reset(); // Limpia el formulario
+    const [form, setForm] = useState({
+        nombre: '',
+        descripcion: '',
+        precio: '',
+        categoria: 'Carnes', // Valor por defecto
+        es_vegano: false,
+        contiene_alergenos: false,
+        imagen_url: '' // ✅ Nuevo estado para la imagen
+    });
+
+    const handleChange = (e) => {
+        const { name, value, type, checked } = e.target;
+        setForm({
+            ...form,
+            [name]: type === 'checkbox' ? checked : value
+        });
+    };
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        // Enviamos los datos al padre (GestionPlatillos)
+        onSubmit(form);
+        // Opcional: Limpiar formulario tras envío exitoso
+        // setForm({ ...form, nombre: '', precio: '' ... }); 
     };
 
     return (
-        <div className="admin-card alta-platillo-card">
-            <h2 className="admin-card-title">Alta de Platillo</h2>
-            <form onSubmit={handleSubmit(handleLocalSubmit)} className="admin-form">
-                
-                {/* CAMPO 1: Nombre del Platillo */}
-                <label>Nombre del Platillo</label>
-                <input
-                    placeholder="Nombre del platillo"
-                    // Registro de campo con reglas de validación
-                    {...register("nombre", { 
-                        required: "El nombre del platillo es obligatorio.", 
-                        maxLength: { value: 100, message: "Máximo 100 caracteres." } 
-                    })}
+        <div className="admin-card">
+            <h3 className="admin-card-title">Alta de Platillo</h3>
+            <form onSubmit={handleSubmit} className="admin-form">
+                <label>Nombre:</label>
+                <input 
+                    type="text" name="nombre" 
+                    value={form.nombre} onChange={handleChange} required 
                 />
-                {/* Muestra el error si existe */}
-                {errors.nombre && <p className="error-message">{errors.nombre.message}</p>}
 
-                {/* CAMPO 2: Descripción */}
-                <label>Descripción</label>
-                <textarea
-                    placeholder="Descripción del platillo"
-                    {...register("descripcion", { 
-                        required: "La descripción es obligatoria.",
-                        minLength: { value: 10, message: "Mínimo 10 caracteres." } 
-                    })}
+                <label>Descripción:</label>
+                <textarea 
+                    name="descripcion" 
+                    value={form.descripcion} onChange={handleChange} 
                 />
-                {errors.descripcion && <p className="error-message">{errors.descripcion.message}</p>}
 
-                {/* CAMPO 3: Precio */}
-                <label>Precio en MXN</label>
-                <input
-                    type="number"
-                    step="0.01"
-                    placeholder="Precio en MXN"
-                    {...register("precio", { 
-                        required: "El precio es obligatorio.",
-                        min: { value: 1, message: "El precio debe ser un número positivo." },
-                        valueAsNumber: true
-                    })}
+                <label>Precio:</label>
+                <input 
+                    type="number" name="precio" step="0.01" 
+                    value={form.precio} onChange={handleChange} required 
                 />
-                {errors.precio && <p className="error-message">{errors.precio.message}</p>}
-                
-                {/* CAMPO 4: Categoría */}
-                <label>Categoría</label>
-                <select
-                    {...register("categoria", { 
-                        required: "La categoría es obligatoria." 
-                    })}
-                >
-                    <option value="">-- Selecciona Categoría --</option>
-                    <option value="principal">Plato Principal</option>
-                    <option value="postre">Postre Francés</option>
-                    <option value="vegana">Opción Vegana</option>
+
+                <label>Categoría:</label>
+                <select name="categoria" value={form.categoria} onChange={handleChange}>
+                    <option value="Carnes">Carnes</option>
+                    <option value="Vegano">Vegano</option>
+                    <option value="Postres">Postres</option>
+                    <option value="Pastas">Pastas</option>
+                    <option value="Bebidas">Bebidas</option>
                 </select>
-                {errors.categoria && <p className="error-message">{errors.categoria.message}</p>}
 
-                <button type="submit" className="submit-button">Dar de Alta</button>
+                {/* ✅ NUEVO CAMPO: URL DE IMAGEN */}
+                <label>URL de la Imagen:</label>
+                <input 
+                    type="text" 
+                    name="imagen_url" 
+                    value={form.imagen_url} 
+                    onChange={handleChange} 
+                    placeholder="https://ejemplo.com/foto.jpg"
+                />
+                {form.imagen_url && (
+                    <div style={{marginTop: '10px'}}>
+                        <small>Vista previa:</small><br/>
+                        <img src={form.imagen_url} alt="Vista previa" style={{width: '100px', height: 'auto', borderRadius: '4px'}} />
+                    </div>
+                )}
+
+                <div style={{marginTop: '15px'}}>
+                    <label>
+                        <input 
+                            type="checkbox" name="es_vegano" 
+                            checked={form.es_vegano} onChange={handleChange} 
+                        /> Es Vegano
+                    </label>
+                </div>
+                <div>
+                    <label>
+                        <input 
+                            type="checkbox" name="contiene_alergenos" 
+                            checked={form.contiene_alergenos} onChange={handleChange} 
+                        /> Contiene Alérgenos
+                    </label>
+                </div>
+
+                <button type="submit" className="submit-button">Crear Platillo</button>
             </form>
         </div>
     );
