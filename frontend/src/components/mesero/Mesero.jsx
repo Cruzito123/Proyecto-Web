@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import HedearUsuarios from '../common/HedearUsuarios.jsx';
+import HedearUsers from '../common/HeaderUsers.jsx';
 
 
 const IconoUsuario = () => '👤';
@@ -16,12 +16,13 @@ function Mesero({ mesasActivas, ordenesListas, onEntregarOrden }) {
       {/* El <div> principal DEBE tener la clase 'dashboard-frame'
         para que los estilos CSS funcionen.
       */}
+      <HedearUsers /> 
       <div className="dashboard-frame">
         
         {/* Y el header debe estar DENTRO del 'dashboard-frame' 
           para que herede los estilos.
         */}
-        <HedearUsuarios /> 
+        
 
         {/* 2. Tarjetas de Estadísticas (KPIs) */}
         <section className="stats-grid">

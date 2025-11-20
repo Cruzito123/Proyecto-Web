@@ -24,3 +24,4 @@ urlpatterns = [
     path('api/', include('myRestaurant.urls')),
 ]
 
+

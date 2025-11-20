@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from .models import *
 from django.contrib.auth.hashers import make_password # Importación necesaria para el hasheo
+from django.contrib.auth import get_user_model
 
 class UsuarioSerializer(serializers.ModelSerializer):
     class Meta:
@@ -50,6 +51,30 @@ class PlatilloSerializer(serializers.ModelSerializer):
         print("✅ PLATILLO ACTUALIZADO EN DB:", instance.nombre, instance.precio)
         
         return instance
+
+User = get_user_model()
+
+class UserManagementSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User 
+        # Incluye los campos necesarios para la gestión administrativa
+        fields = ['id', 'username', 'email', 'first_name', 'last_name', 'password', 'is_staff', 'is_active', 'groups']
+        # Oculta la contraseña en la respuesta y permite solo escritura
+        extra_kwargs = {'password': {'write_only': True, 'required': True}}
+
+    # Sobrescribe el método create para hashear la contraseña
+    def create(self, validated_data):
+        user = User.objects.create_user(**validated_data)
+        return user
+
+    # Sobrescribe el update para manejar la contraseña si se cambia
+    def update(self, instance, validated_data):
+        password = validated_data.pop('password', None)
+        if password:
+            instance.set_password(password)
+        return super().update(instance, validated_data)
+
+
 
 # En serializers.py - ACTUALIZA el ReservacionSerializer
 class ReservacionSerializer(serializers.ModelSerializer):

@@ -1,9 +1,12 @@
 from rest_framework import generics
+from rest_framework import viewsets
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from django.contrib.auth.hashers import check_password
 from django.http import JsonResponse
 from .models import *
+from rest_framework.permissions import IsAdminUser
+from .serializers import UserManagementSerializer
 from .serializers import *
 from .serializers import (
     UsuarioSerializer,
@@ -14,6 +17,13 @@ from .serializers import (
     ResenaSerializer
 )
 
+User = get_user_model() 
+
+class UserManagementViewSet(viewsets.ModelViewSet):
+    queryset = User.objects.all().order_by('id')
+    serializer_class = UserManagementSerializer
+    # ¡IMPORTANTE! Solo los administradores deben usar esta vista
+    permission_classes = [IsAdminUser]
 
 # -----------------------
 # AUTH: Login / Registro

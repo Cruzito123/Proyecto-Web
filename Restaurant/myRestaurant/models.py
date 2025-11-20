@@ -7,8 +7,15 @@ class Usuario(models.Model):
     correo = models.EmailField(unique=True)
     telefono = models.CharField(max_length=20, blank=True, null=True)
     contrasena = models.CharField(max_length=255)
+    
+    # Campos existentes...
     tipo_usuario = models.CharField(max_length=20, default='cliente')
     fecha_registro = models.DateTimeField(auto_now_add=True)
+
+    # ✅ NUEVOS CAMPOS PARA EMPLEADOS (Agrégalos al final de la clase)
+    puesto = models.CharField(max_length=50, blank=True, null=True, help_text="Ej: Chef, Mesero")
+    salario = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
+    turno = models.CharField(max_length=50, blank=True, null=True, help_text="Ej: Matutino, Vespertino")
 
     def __str__(self):
         return self.nombre

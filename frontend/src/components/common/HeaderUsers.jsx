@@ -1,4 +1,4 @@
-// frontend/src/components/common/HedearUsuarios.jsx
+// frontend/src/components/common/HedearUsers.jsx
 
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
@@ -36,11 +36,9 @@ function HedearUsuarios() {
     
     return (
         <header className="dashboard-header">
-            <div className="logo-container-users">
-                {/* 👈 Redirige a la ruta principal del dashboard (ejemplo: /gestion-platillos) */}
-                <Link to="/gestion-platillos"> 
-                    <img src={logo} alt="Logo Restaurante" className="header-logo-users" />
-                </Link>
+            <div className="logo-container-users" text>
+                <text>Le Jardin Mexican</text>
+
             </div>
             
             <nav className="user-nav-links">
