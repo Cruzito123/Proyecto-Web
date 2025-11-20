@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './cliente.css';
 import { useNavigate } from 'react-router-dom';
+import EditReservationModal from './EditReservationModal.jsx';
 
 // Iconos de marcador de posición
 const IconoCalendario = () => '📅';
@@ -17,34 +18,64 @@ function PanelCliente() {
   const [reservaciones, setReservaciones] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [editingReservation, setEditingReservation] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   // Cargar reservaciones desde la API
-  useEffect(() => {
-    const cargarReservaciones = async () => {
-      try {
-        setLoading(true);
-        const response = await fetch('http://localhost:8000/api/reservaciones/');
-        
-        if (!response.ok) {
-          throw new Error(`Error ${response.status}: ${response.statusText}`);
-        }
-        
-        const data = await response.json();
-        console.log('Reservaciones cargadas:', data);
-        setReservaciones(data);
-        
-      } catch (err) {
-        console.error('Error cargando reservaciones:', err);
-        setError('No se pudieron cargar las reservaciones');
-      } finally {
-        setLoading(false);
+  const cargarReservaciones = async () => {
+    try {
+      setLoading(true);
+      const response = await fetch('http://localhost:8000/api/reservaciones/');
+      
+      if (!response.ok) {
+        throw new Error(`Error ${response.status}: ${response.statusText}`);
       }
-    };
+      
+      const data = await response.json();
+      console.log('Reservaciones cargadas:', data);
+      setReservaciones(data);
+      
+    } catch (err) {
+      console.error('Error cargando reservaciones:', err);
+      setError('No se pudieron cargar las reservaciones');
+    } finally {
+      setLoading(false);
+    }
+  };
 
+  useEffect(() => {
     cargarReservaciones();
   }, []);
 
-  // Función para formatear la fecha (opcional)
+  // Función para abrir el modal de edición
+  const handleModificarClick = (reserva) => {
+    setEditingReservation(reserva);
+    setIsModalOpen(true);
+  };
+
+  // Función para cerrar el modal
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    setEditingReservation(null);
+  };
+
+  // Función para actualizar la lista después de editar
+  const handleReservationUpdate = (updatedReservation) => {
+    setReservaciones(prevReservaciones => 
+      prevReservaciones.map(reserva => 
+        reserva.id === updatedReservation.id ? updatedReservation : reserva
+      )
+    );
+  };
+
+  // Función para eliminar reservación
+  const handleReservationDelete = (reservationId) => {
+    setReservaciones(prevReservaciones => 
+      prevReservaciones.filter(reserva => reserva.id !== reservationId)
+    );
+  };
+
+  // Función para formatear la fecha
   const formatearFecha = (fechaString) => {
     const fecha = new Date(fechaString);
     return fecha.toLocaleDateString('es-MX', {
@@ -54,7 +85,7 @@ function PanelCliente() {
     });
   };
 
-  // Función para formatear la hora (opcional)
+  // Función para formatear la hora
   const formatearHora = (horaString) => {
     const hora = new Date(`2000-01-01T${horaString}`);
     return hora.toLocaleTimeString('es-MX', {
@@ -67,16 +98,16 @@ function PanelCliente() {
   return (
     <div className="client-dashboard-frame">
       
-      {/* 1. Encabezado de Bienvenida */}
+      {/* Encabezado de Bienvenida */}
       <header className="client-header">
         <h1>Bienvenido, martincruzarmas1</h1>
         <p>Panel de Cliente</p>
       </header>
 
-      {/* 2. Layout Principal de 2 Columnas */}
+      {/* Layout Principal */}
       <main className="client-main-layout">
 
-        {/* --- COLUMNA IZQUIERDA (PRINCIPAL) --- */}
+        {/* Columna Izquierda */}
         <section className="client-main-column">
 
           {/* Card: Mis Reservaciones */}
@@ -93,6 +124,7 @@ function PanelCliente() {
                   <div key={reserva.id} className="reservation-item">
                     <div className="reservation-info">
                       <span className="info-line">
+                        <span className="reservation-id">ID: #{reserva.id}</span>
                         <IconoCalendario /> {formatearFecha(reserva.fecha)}
                       </span>
                       <span className="info-line">
@@ -108,7 +140,12 @@ function PanelCliente() {
                       <span className={`status-pill ${reserva.estado.toLowerCase()}`}>
                         {reserva.estado}
                       </span>
-                      <button className="btn-modify">Modificar</button>
+                      <button 
+                        className="btn-modify"
+                        onClick={() => handleModificarClick(reserva)}
+                      >
+                        Modificar
+                      </button>
                     </div>
                   </div>
                 ))
@@ -158,7 +195,7 @@ function PanelCliente() {
 
         </section>
 
-        {/* --- COLUMNA DERECHA (SIDEBAR) --- */}
+        {/* Columna Derecha */}
         <aside className="client-sidebar-column">
 
           {/* Card: Programa de Lealtad */}
@@ -204,6 +241,15 @@ function PanelCliente() {
         </aside>
 
       </main>
+
+      {/* Modal de Edición */}
+      <EditReservationModal
+        reservation={editingReservation}
+        isOpen={isModalOpen}
+        onClose={handleCloseModal}
+        onUpdate={handleReservationUpdate}
+        onDelete={handleReservationDelete}
+      />
     </div>
   );
 }
