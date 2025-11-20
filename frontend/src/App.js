@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 // Importación correcta para React Router v6+
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-
 // Importar componentes de pages public
 import Home from './pages/public/Home.jsx'; 
 import Menu from './pages/public/Menu.jsx'; 
@@ -15,12 +14,12 @@ import Cliente from './components/Cliente/cliente.jsx';
 import Reservations from './components/Cliente/Reservations.jsx';
 // Importar  vistas privates
 import GestionPlatillos from './pages/private/GestionPlatillos'; 
-
 import Mesero from './components/mesero/Mesero.jsx';
 import PanelChef from './pages/private/Chef.jsx';
 import AsignarMesa from './components/mesero/AsignarMesa.jsx';
 import TomarOrden from './components/mesero/TomarOrden';
 import VerReservaciones from './components/mesero/VerReservaciones';
+import GestionEmpleados from './components/admin/GestionEmpleados.jsx';
 // Asegúrate de crear estos archivos en las rutas indicadas:
 // - frontend/src/pages/public/Home.jsx
 // - frontend/src/pages/private/GestionPlatillos.jsx, etc.
@@ -103,11 +102,13 @@ function App() {
           {/* VISTAS PÚBLICAS (Cliente) */}
           <Route path="/" element={<Home />} />
           
+          
 
           {/* VISTA PRIVADA (Admin) */}
           <Route path="/gestion-platillos" element={<GestionPlatillos />} />
           <Route path='/cliente' element={<Cliente reservaciones={reservaciones} />} />
-
+          <Route path="/gestion-empleados" element={<GestionEmpleados />} />
+          {/* VISTA PRIVADA (Mesero) */}    
           <Route path="/mesero" element={<Mesero mesasActivas={mesasActivas} ordenesListas={ordenesListas} onEntregarOrden={handleEntregarOrden} />} />
           
           <Route path="/asignar-mesa" element={<AsignarMesa onMesaAsignada={handleAsignarMesa} mesasActivas={mesasActivas} />} />

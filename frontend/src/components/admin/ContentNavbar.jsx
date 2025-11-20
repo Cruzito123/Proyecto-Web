@@ -30,14 +30,14 @@ function ContentNavbar() {
                             isActive ? "nav-link-content-admin active-content-nav" : "nav-link-content-admin"
                         }
                     >
-                        Gestión de Pedidos
+                        Gestión de Empleados
                     </NavLink>
                 </li>
 
                 {/* 3. Gestión de Usuarios (Ejemplo) */}
                 <li>
                     <NavLink 
-                        to="/gestion-usuarios" 
+                        to="/gestion-empleados" 
                         className={({ isActive }) => 
                             isActive ? "nav-link-content-admin active-content-nav" : "nav-link-content-admin"
                         }

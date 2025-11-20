@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './cliente.css';
 import { useNavigate } from 'react-router-dom';
 import EditReservationModal from './EditReservationModal.jsx';
-
+import HedearUsuarios from '../common/HeaderUsers.jsx';
 // Iconos de marcador de posición
 const IconoCalendario = () => '📅';
 const IconoHistorial = () => '📜';
@@ -96,13 +96,12 @@ function PanelCliente() {
   };
 
   return (
+    <div className="page-container-gray">
+      <HedearUsuarios />
     <div className="client-dashboard-frame">
       
-      {/* Encabezado de Bienvenida */}
-      <header className="client-header">
-        <h1>Bienvenido, martincruzarmas1</h1>
-        <p>Panel de Cliente</p>
-      </header>
+
+     
 
       {/* Layout Principal */}
       <main className="client-main-layout">
@@ -250,6 +249,7 @@ function PanelCliente() {
         onUpdate={handleReservationUpdate}
         onDelete={handleReservationDelete}
       />
+    </div>
     </div>
   );
 }

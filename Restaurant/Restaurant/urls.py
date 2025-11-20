@@ -24,3 +24,6 @@ urlpatterns = [
     path('api/', include('myRestaurant.urls')),
 ]
 
+router = DefaultRouter()
+# Registra la vista para el CRUD de usuarios
+router.register(r'usuarios', UserManagementViewSet)

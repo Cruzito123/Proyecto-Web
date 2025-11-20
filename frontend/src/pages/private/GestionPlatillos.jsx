@@ -88,10 +88,10 @@ function GestionPlatillos() {
             <HedearUser /> 
             
             {/* 2. Barra de Navegación Secundaria */}
-            <ContentNavbar />
+            
             
             <main className="gestion-main-content">
-                
+            <ContentNavbar />
                 
                 {/* 📢 Mensaje de estado (éxito o error) */}
                 {message && (
