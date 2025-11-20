@@ -8,6 +8,7 @@ body, html {
     scroll-behavior: smooth; /* Para que la navegación a #mision sea suave */
 }
 
+
 /* 2. ESTILOS DEL HEADER (Barra de Navegación) */
 .main-header {
     background-color: #1a202c; /* Azul oscuro/Negro */

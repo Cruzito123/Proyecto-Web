@@ -34,6 +34,22 @@ class PlatilloSerializer(serializers.ModelSerializer):
         model = Platillo
         fields = '__all__'
 
+    # ✅ MÉTODO UPDATE CORREGIDO para manejar PATCH
+    def update(self, instance, validated_data):
+        # 👈 DEBUG: Imprime los datos que el serializador está a punto de guardar
+        print("✅ SERIALIZER UPDATE: Datos validados para Platillo:", validated_data)
+        
+        # Este bucle aplica los datos que vienen en validated_data a la instancia
+        # Solo se incluyen los campos enviados en la petición PATCH
+        for attr, value in validated_data.items():
+            setattr(instance, attr, value)
+        
+        instance.save()
+        
+        # 👈 DEBUG: Imprime la instancia después de guardar
+        print("✅ PLATILLO ACTUALIZADO EN DB:", instance.nombre, instance.precio)
+        
+        return instance
 
 class ReservacionSerializer(serializers.ModelSerializer):
     class Meta:

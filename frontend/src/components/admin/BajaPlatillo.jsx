@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { useForm } from 'react-hook-form';
 
@@ -6,10 +5,10 @@ function BajaPlatillo({ onSubmit }) {
     const { register, handleSubmit, formState: { errors } } = useForm();
     
     const handleLocalSubmit = (data) => {
-        // Confirmación antes de simular la eliminación
+        // Confirmación antes de enviar la solicitud DELETE al padre
         if (window.confirm(`¿Estás seguro de eliminar el Platillo con ID ${data.id}?`)) {
+            // Llama a la función AJAX del padre
             onSubmit(data);
-            alert(`🗑️ Formulario de Baja Validado para ID: ${data.id}`);
         }
     };
 
@@ -23,9 +22,10 @@ function BajaPlatillo({ onSubmit }) {
                 <input
                     type="number"
                     placeholder="Ingresa el ID"
-                    // Validación simple: requerido y número positivo
+                    // Asegurar que el ID se envíe como número
                     {...register("id", { 
                         required: "El ID es obligatorio.",
+                        valueAsNumber: true, 
                         min: { value: 1, message: "ID no válido." }
                     })}
                 />
