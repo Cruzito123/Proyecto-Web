@@ -35,6 +35,7 @@ class PlatilloSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
+# En serializers.py - ACTUALIZA el ReservacionSerializer
 class ReservacionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Reservacion

@@ -1,8 +1,8 @@
-import React from 'react';
-import './cliente.css'; // Crearemos este archivo CSS a continuación
+import React, { useState, useEffect } from 'react';
+import './cliente.css';
 import { useNavigate } from 'react-router-dom';
 
-// Iconos de marcador de posición (puedes usar react-icons)
+// Iconos de marcador de posición
 const IconoCalendario = () => '📅';
 const IconoHistorial = () => '📜';
 const IconoLealtad = () => '⭐';
@@ -12,8 +12,57 @@ const IconoUbicacion = () => '📍';
 const IconoBolsa = () => '🛍️';
 const IconoResena = () => '✍️';
 
-function PanelCliente({ reservaciones = [] }) {
+function PanelCliente() {
   const navigate = useNavigate();
+  const [reservaciones, setReservaciones] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  // Cargar reservaciones desde la API
+  useEffect(() => {
+    const cargarReservaciones = async () => {
+      try {
+        setLoading(true);
+        const response = await fetch('http://localhost:8000/api/reservaciones/');
+        
+        if (!response.ok) {
+          throw new Error(`Error ${response.status}: ${response.statusText}`);
+        }
+        
+        const data = await response.json();
+        console.log('Reservaciones cargadas:', data);
+        setReservaciones(data);
+        
+      } catch (err) {
+        console.error('Error cargando reservaciones:', err);
+        setError('No se pudieron cargar las reservaciones');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    cargarReservaciones();
+  }, []);
+
+  // Función para formatear la fecha (opcional)
+  const formatearFecha = (fechaString) => {
+    const fecha = new Date(fechaString);
+    return fecha.toLocaleDateString('es-MX', {
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric'
+    });
+  };
+
+  // Función para formatear la hora (opcional)
+  const formatearHora = (horaString) => {
+    const hora = new Date(`2000-01-01T${horaString}`);
+    return hora.toLocaleTimeString('es-MX', {
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: true
+    });
+  };
 
   return (
     <div className="client-dashboard-frame">
@@ -35,23 +84,45 @@ function PanelCliente({ reservaciones = [] }) {
             <h3><IconoCalendario /> Mis Reservaciones</h3>
             
             <div className="reservations-list">
-              {reservaciones.length > 0 ? reservaciones.map(res => (
-                <div key={res.id} className="reservation-item">
-                  <div className="reservation-info">
-                    <span className="info-line"><IconoCalendario /> {res.fecha}</span>
-                    <span className="info-line"><IconoReloj /> {res.hora} • {res.personas} personas</span>
+              {loading ? (
+                <p>Cargando reservaciones...</p>
+              ) : error ? (
+                <p className="error-message">{error}</p>
+              ) : reservaciones.length > 0 ? (
+                reservaciones.map(reserva => (
+                  <div key={reserva.id} className="reservation-item">
+                    <div className="reservation-info">
+                      <span className="info-line">
+                        <IconoCalendario /> {formatearFecha(reserva.fecha)}
+                      </span>
+                      <span className="info-line">
+                        <IconoReloj /> {formatearHora(reserva.hora)} • {reserva.num_personas} personas
+                      </span>
+                      {reserva.nombre_cliente && (
+                        <span className="info-line">
+                          👤 A nombre de: {reserva.nombre_cliente}
+                        </span>
+                      )}
+                    </div>
+                    <div className="reservation-actions">
+                      <span className={`status-pill ${reserva.estado.toLowerCase()}`}>
+                        {reserva.estado}
+                      </span>
+                      <button className="btn-modify">Modificar</button>
+                    </div>
                   </div>
-                  <div className="reservation-actions">
-                    <span className={`status-pill ${res.estado.toLowerCase()}`}>{res.estado}</span>
-                    <button className="btn-modify">Modificar</button>
-                  </div>
-                </div>
-              )) : (
+                ))
+              ) : (
                 <p>No tienes reservaciones activas.</p>
               )}
             </div>
             
-            <button className="btn-full-width-gold" onClick={() => navigate('/reservar')}>Nueva Reservación</button>
+            <button 
+              className="btn-full-width-gold" 
+              onClick={() => navigate('/reservar')}
+            >
+              Nueva Reservación
+            </button>
           </div>
 
           {/* Card: Historial de Pedidos */}
@@ -105,7 +176,6 @@ function PanelCliente({ reservaciones = [] }) {
             <div className="loyalty-progress">
               <p>Progreso a Platino</p>
               <div className="progress-bar-container">
-                {/* El width es el porcentaje de progreso (ej. 850 / 1000 = 85%) */}
                 <div className="progress-bar-fill" style={{ width: '85%' }}></div>
               </div>
               <span>150 puntos para siguiente nivel</span>

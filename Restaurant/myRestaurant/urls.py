@@ -6,4 +6,7 @@ urlpatterns = [
     path('usuarios/', UsuarioList.as_view()),
     path('platillos/', PlatilloList.as_view()),
    
+    # aGREGAR ESTAS RUTAS PARA RESERVACIONES
+    path('reservaciones/', ReservacionList.as_view()),
+    path('reservaciones/<int:pk>/', ReservacionDetail.as_view()),
 ]

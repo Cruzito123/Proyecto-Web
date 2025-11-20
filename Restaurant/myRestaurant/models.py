@@ -29,13 +29,25 @@ class Platillo(models.Model):
 
 
 # ✅ Reservaciones
+# En models.py - MODIFICA el modelo Reservacion con campos opcionales
 class Reservacion(models.Model):
-    usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE)
+    # Hacer usuario opcional para reservaciones de no-registrados
+    usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE, null=True, blank=True)
+    
+    # Agregar campos del cliente como opcionales inicialmente
+    nombre_cliente = models.CharField(max_length=100, null=True, blank=True)
+    email_cliente = models.EmailField(null=True, blank=True)
+    telefono_cliente = models.CharField(max_length=20, null=True, blank=True)
+    
     fecha = models.DateField()
     hora = models.TimeField()
     num_personas = models.IntegerField()
     estado = models.CharField(max_length=20, default='pendiente')
     fecha_creacion = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        cliente_nombre = self.nombre_cliente or (self.usuario.nombre if self.usuario else "Cliente anónimo")
+        return f"{cliente_nombre} - {self.fecha} {self.hora}"
 
 
 # ✅ Pedidos

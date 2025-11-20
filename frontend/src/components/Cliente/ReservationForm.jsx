@@ -1,16 +1,57 @@
-
 // frontend/src/components/common/ReservationForm.jsx
 
 import React from 'react';
 import { useForm } from 'react-hook-form';
 
-function ReservationForm({ onSubmit }) {
+function ReservationForm() {
     const { register, handleSubmit, formState: { errors }, reset } = useForm();
     
-    // Función de envío. Solo se llama si la validación pasa.
-    const handleLocalSubmit = (data) => {
-        onSubmit(data);
-        reset(); 
+    // Función de envío a la base de datos
+    const handleLocalSubmit = async (data) => {
+        try {
+            console.log('Datos del formulario:', data);
+            
+            // Preparar datos para la API
+            const reservationData = {
+                nombre_cliente: data.nombre,
+                email_cliente: data.email,
+                telefono_cliente: data.telefono,
+                fecha: data.fecha,
+                hora: data.hora,
+                num_personas: data.personas,
+                estado: 'pendiente'
+            };
+
+            console.log('Enviando a la API:', reservationData);
+
+            // Enviar a la API usando Fetch
+            const response = await fetch('http://localhost:8000/api/reservaciones/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(reservationData)
+            });
+
+            // Verificar si la respuesta fue exitosa
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.detail || `Error del servidor: ${response.status}`);
+            }
+
+            const result = await response.json();
+            console.log('✅ Reserva creada exitosamente:', result);
+            
+            // Resetear formulario
+            reset();
+            
+            // Mostrar mensaje de éxito
+            alert('¡Reserva creada exitosamente! Recibirás un correo de confirmación.');
+            
+        } catch (error) {
+            console.error('❌ Error creando reserva:', error);
+            alert(`Error al crear la reserva: ${error.message}`);
+        }
     };
 
     return (
