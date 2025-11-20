@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { useForm } from 'react-hook-form';
 
@@ -6,12 +5,39 @@ function ModificarPlatillo({ onSubmit }) {
     const { register, handleSubmit, formState: { errors } } = useForm();
     
     const handleLocalSubmit = (data) => {
-        // Verifica que al menos un campo de modificación (nombre, precio, etc.) esté lleno
+        // 1. Crear el objeto que se enviará a la API (API Data)
+        const apiData = {};
+        
+        // Verifica que al menos un campo de modificación esté lleno
         if (!data.nuevoNombre && !data.nuevoPrecio && !data.nuevaDesc) {
             alert("⚠️ Debes rellenar al menos un campo para modificar.");
             return;
         }
-        onSubmit(data);
+        
+        // 2. Mapeo de datos: Campos del formulario a campos de la API de Django
+        
+        // Mapeo de Nuevo Nombre a 'nombre'
+        if (data.nuevoNombre) {
+            apiData.nombre = data.nuevoNombre;
+        }
+        
+        // Mapeo de Nuevo Precio a 'precio'
+        if (data.nuevoPrecio) {
+            // Aseguramos que el precio se envíe como un número flotante,
+            // que es lo que espera el DecimalField de Django.
+            apiData.precio = parseFloat(data.nuevoPrecio); 
+        }
+        
+        // Mapeo de Nueva Descripción a 'descripcion'
+        if (data.nuevaDesc) {
+            apiData.descripcion = data.nuevaDesc;
+        }
+
+        // 3. Incluir el ID para que el componente padre pueda construir la URL
+        apiData.id = data.id; // El ID ya viene como número gracias a valueAsNumber: true
+
+        // 4. Enviar los datos MAPEADOS (apiData) a la función del padre (GestionPlatillos)
+        onSubmit(apiData);
         alert(`✏️ Formulario de Modificación Validado para ID: ${data.id}.`);
     };
 
@@ -27,6 +53,7 @@ function ModificarPlatillo({ onSubmit }) {
                     placeholder="Ingresa el ID"
                     {...register("id", { 
                         required: "El ID es obligatorio para modificar.",
+                        valueAsNumber: true, // Asegura que se envíe como número
                         min: { value: 1, message: "ID no válido." }
                     })}
                 />
@@ -45,8 +72,8 @@ function ModificarPlatillo({ onSubmit }) {
                     step="0.01"
                     placeholder="Nuevo precio en MXN"
                     {...register("nuevoPrecio", {
-                        // Validación condicional: solo valida si hay un valor ingresado
-                        validate: value => (!value || value > 0) || "El precio debe ser positivo."
+                        // Validación condicional
+                        validate: value => (!value || parseFloat(value) > 0) || "El precio debe ser positivo."
                     })}
                 />
                 {errors.nuevoPrecio && <p className="error-message">{errors.nuevoPrecio.message}</p>}

@@ -83,7 +83,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'restaurant_db',   # cambia por tu base
         'USER': 'postgres',         # cambia por tu usuario
-        'PASSWORD': 'Ghbase21',
+        'PASSWORD': 'Losarmas1*',
         'HOST': 'localhost',
         'PORT': '5432',
     }
