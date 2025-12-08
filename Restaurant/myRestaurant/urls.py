@@ -1,22 +1,24 @@
+# myRestaurant/urls.py - VERSIÓN FINAL CORREGIDA
 from django.urls import path
 from .views import *
 
 urlpatterns = [
+    # Autenticación y Usuarios
     path('login/', LoginView.as_view()),
     path('usuarios/', UsuarioList.as_view()),
-    
-    # 1. Ruta para ALTAS (POST) y Listar Platillos (GET sin ID)
-    # URL: /api/platillos/
-    path('platillos/', PlatilloList.as_view()),
-    
-    # ✅ LÍNEA CRUCIAL FALTANTE O INCORRECTA
-    # 2. Ruta para MODIFICAR (PUT) y BAJA (DELETE) de un Platillo específico.
-    # URL: /api/platillos/2/ (o cualquier ID)
-    path('platillos/<int:pk>/', PlatilloDetail.as_view()),
     path('usuarios/<int:pk>/', UsuarioDetail.as_view()),
-    # aGREGAR ESTAS RUTAS PARA RESERVACIONES
+    
+    # Platillos
+    path('platillos/', PlatilloList.as_view()),
+    path('platillos/<int:pk>/', PlatilloDetail.as_view()),
+    
+    # Reservaciones
     path('reservaciones/', ReservacionList.as_view()),
     path('reservaciones/<int:pk>/', ReservacionDetail.as_view()),
-
+    
+    # ✅ Reseñas - RUTAS CORRECTAS
+    path('resenas/', ResenaList.as_view(), name='resena-list'),
+    path('resenas/<int:pk>/', ResenaDetail.as_view(), name='resena-detail'),
+    
+    # ❌ NO incluyas esto: path('api/', include('myRestaurant.urls'))
 ]
-

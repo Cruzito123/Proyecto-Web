@@ -1,15 +1,41 @@
-// frontend/src/components/common/ReviewForm.jsx (ACTUALIZADO)
-
-import React from 'react';
+// frontend/src/components/common/ReviewForm.jsx
+import React, { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
+import { platilloAPI } from '../../services/api';
 
 function ReviewForm({ onSubmit }) {
-    // Aquí ya no usamos 'userName' en props, pues el campo Nombre es visible
     const { register, handleSubmit, formState: { errors }, reset } = useForm();
+    const [platillos, setPlatillos] = useState([]);
+    const [loadingPlatillos, setLoadingPlatillos] = useState(true);
+
+    useEffect(() => {
+        fetchPlatillos();
+    }, []);
+
+    const fetchPlatillos = async () => {
+        try {
+            const response = await platilloAPI.getAll();
+            setPlatillos(response.data);
+        } catch (error) {
+            console.error('Error cargando platillos:', error);
+            // Datos de ejemplo como fallback
+            setPlatillos([
+                { id: 1, nombre: "Sushi Roll California", precio: "110.00" },
+                { id: 2, nombre: "Tacos de Birria", precio: "85.00" },
+                { id: 3, nombre: "Enchiladas Suizas", precio: "95.00" },
+            ]);
+        } finally {
+            setLoadingPlatillos(false);
+        }
+    };
 
     const handleLocalSubmit = (data) => {
-        onSubmit(data); 
-        alert(`💬 ¡Gracias por tu reseña, ${data.nombre}! (Validación exitosa)`);
+        // Convertir platillo vacío a null
+        if (data.platillo === "") {
+            data.platillo = null;
+        }
+        
+        onSubmit(data);
         reset();
     };
 
@@ -18,15 +44,12 @@ function ReviewForm({ onSubmit }) {
             <h2 style={{ fontSize: '32px', marginBottom: '20px' }}>Deja tu Reseña</h2>
             <form onSubmit={handleSubmit(handleLocalSubmit)} className="admin-form">
                 
-                {/* Contenedor de Nombre y Calificación */}
+                {/* Nombre y Calificación */}
                 <div style={{ display: 'flex', gap: '20px', marginBottom: '15px' }}>
-                    
-                    {/* CAMPO 1: Nombre */}
                     <div style={{ flex: 1 }}>
-                        <label>Nombre</label>
+                        <label>Nombre *</label>
                         <input
                             placeholder="Tu nombre"
-                            // Validación: Requerido
                             {...register("nombre", { 
                                 required: "El nombre es obligatorio.", 
                                 minLength: { value: 3, message: "Mínimo 3 caracteres." }
@@ -35,25 +58,28 @@ function ReviewForm({ onSubmit }) {
                         {errors.nombre && <p className="error-message">{errors.nombre.message}</p>}
                     </div>
 
-                    {/* CAMPO 2: Calificación (Select para 1-5 estrellas) */}
                     <div style={{ flex: 1 }}>
-                        <label>Calificación</label>
+                        <label>Calificación *</label>
                         <select
                             {...register("rating", { 
                                 required: "La calificación es obligatoria.",
-                                valueAsNumber: true // Asegura que el valor sea un número
+                                valueAsNumber: true
                             })}
                         >
                             <option value="">-- Calificación --</option>
-                            {[5, 4, 3, 2, 1].map(n => <option key={n} value={n}>{n} estrellas</option>)}
+                            <option value="5">5 estrellas</option>
+                            <option value="4">4 estrellas</option>
+                            <option value="3">3 estrellas</option>
+                            <option value="2">2 estrellas</option>
+                            <option value="1">1 estrella</option>
                         </select>
                         {errors.rating && <p className="error-message">{errors.rating.message}</p>}
                     </div>
                 </div>
 
-                {/* CAMPO 3: Tipo (Local/Extranjero) */}
+                {/* Tipo */}
                 <div style={{ marginBottom: '15px' }}>
-                    <label>Tipo</label>
+                    <label>Tipo *</label>
                     <select
                         {...register("tipo", { 
                             required: "El tipo es obligatorio." 
@@ -66,20 +92,55 @@ function ReviewForm({ onSubmit }) {
                     {errors.tipo && <p className="error-message">{errors.tipo.message}</p>}
                 </div>
 
-                {/* CAMPO 4: Comentario (Textarea) */}
-                <label>Comentario</label>
-                <textarea
-                    placeholder="Cuéntanos sobre tu experiencia..."
-                    rows="4"
-                    {...register("comentario", { 
-                        required: "El comentario es obligatorio.",
-                        minLength: { value: 10, message: "Mínimo 10 caracteres para ser descriptivo." } 
-                    })}
-                />
-                {errors.comentario && <p className="error-message">{errors.comentario.message}</p>}
+                {/* Platillo OPCIONAL */}
+                <div style={{ marginBottom: '15px' }}>
+                    <label>¿Sobre qué platillo? (Opcional)</label>
+                    <select
+                        {...register("platillo")}
+                        defaultValue=""
+                        disabled={loadingPlatillos}
+                    >
+                        <option value="">-- Experiencia general del restaurante --</option>
+                        
+                        {loadingPlatillos ? (
+                            <option disabled>Cargando platillos...</option>
+                        ) : platillos.length > 0 ? (
+                            platillos.map(platillo => {
+                                const precio = parseFloat(platillo.precio) || 0;
+                                return (
+                                    <option key={platillo.id} value={platillo.id}>
+                                        {platillo.nombre} - ${precio.toFixed(2)}
+                                    </option>
+                                );
+                            })
+                        ) : (
+                            <option disabled>No hay platillos disponibles</option>
+                        )}
+                    </select>
+                    <p style={{ fontSize: '12px', color: '#666', marginTop: '5px' }}>
+                        Deja en blanco para comentar sobre la experiencia general
+                    </p>
+                </div>
 
-                <button type="submit" className="submit-button" 
-                    style={{ backgroundColor: '#d1a337', marginTop: '30px', width: '100%' }}>
+                {/* Comentario */}
+                <div style={{ marginBottom: '15px' }}>
+                    <label>Comentario *</label>
+                    <textarea
+                        placeholder="Cuéntanos sobre tu experiencia..."
+                        rows="4"
+                        {...register("comentario", { 
+                            required: "El comentario es obligatorio.",
+                            minLength: { value: 10, message: "Mínimo 10 caracteres." } 
+                        })}
+                    />
+                    {errors.comentario && <p className="error-message">{errors.comentario.message}</p>}
+                </div>
+
+                <button 
+                    type="submit" 
+                    className="submit-button" 
+                    style={{ backgroundColor: '#d1a337', marginTop: '10px', width: '100%' }}
+                >
                     Enviar Reseña
                 </button>
             </form>
