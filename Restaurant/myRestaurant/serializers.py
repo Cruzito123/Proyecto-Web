@@ -95,11 +95,31 @@ class DetallePedidoSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
+# myRestaurant/serializers.py
 class ResenaSerializer(serializers.ModelSerializer):
+    # Campo adicional para mostrar nombre del platillo
+    platillo_nombre = serializers.CharField(
+        source='platillo.nombre', 
+        read_only=True, 
+        allow_null=True
+    )
+    
     class Meta:
         model = Resena
-        fields = '__all__'
-
+        fields = [
+            'id', 'usuario', 'platillo', 'platillo_nombre',
+            'calificacion', 'comentario', 'fecha', 'nombre', 'tipo'
+        ]
+        extra_kwargs = {
+            'platillo': {'required': False, 'allow_null': True},
+            'usuario': {'required': True}
+        }
+    
+    def validate(self, data):
+        # Validación personalizada si necesitas
+        if data.get('calificacion') < 1 or data.get('calificacion') > 5:
+            raise serializers.ValidationError("La calificación debe estar entre 1 y 5")
+        return data
 
 class BlogSerializer(serializers.ModelSerializer):
     class Meta:

@@ -1,4 +1,4 @@
-from rest_framework import generics
+from rest_framework import generics,status
 from rest_framework import viewsets
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -16,6 +16,9 @@ from .serializers import (
     DetallePedidoSerializer,
     ResenaSerializer
 )
+from .models import Resena
+
+
 
 User = get_user_model() 
 
@@ -109,15 +112,56 @@ class DetallePedidoDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = DetallePedido.objects.all()
     serializer_class = DetallePedidoSerializer
 
-
+# En views.py, en la clase ResenaList:
 class ResenaList(generics.ListCreateAPIView):
-    queryset = Resena.objects.all()
+    queryset = Resena.objects.all().order_by('-fecha')
     serializer_class = ResenaSerializer
+    
+    def create(self, request, *args, **kwargs):
+        print(f"📥 POST /api/resenas/ - Datos: {request.data}")
+        
+        try:
+            # Validar que el usuario existe
+            from .models import Usuario
+            usuario_id = request.data.get('usuario')
+            if usuario_id:
+                if not Usuario.objects.filter(id=usuario_id).exists():
+                    return Response(
+                        {"error": f"Usuario con ID {usuario_id} no existe"},
+                        status=status.HTTP_400_BAD_REQUEST
+                    )
+            
+            # Validar platillo si se envió
+            platillo_id = request.data.get('platillo')
+            if platillo_id and platillo_id != "":
+                if not Platillo.objects.filter(id=platillo_id).exists():
+                    return Response(
+                        {"error": f"Platillo con ID {platillo_id} no existe"},
+                        status=status.HTTP_400_BAD_REQUEST
+                    )
+            
+            response = super().create(request, *args, **kwargs)
+            print(f"✅ Reseña creada ID: {response.data.get('id')}")
+            return response
+            
+        except Exception as e:
+            print(f"❌ Error: {str(e)}")
+            return Response(
+                {"error": str(e)},
+                status=status.HTTP_400_BAD_REQUEST
+            )
 
 class ResenaDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Resena.objects.all()
     serializer_class = ResenaSerializer
 
+class PlatilloList(generics.ListAPIView):
+    queryset = Platillo.objects.all()
+    serializer_class = PlatilloSerializer
+
+class ResenaDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Resena.objects.all()
+    serializer_class = ResenaSerializer
 
 class BlogList(generics.ListCreateAPIView):
     queryset = Blog.objects.all()

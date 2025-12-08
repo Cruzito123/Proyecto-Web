@@ -73,13 +73,26 @@ class DetallePedido(models.Model):
 
 
 # ✅ Reseñas
+# En models.py - Asegúrate que Resena tenga estos campos
+# models.py - VERIFICA QUE TENGA ESTOS CAMPOS EXACTOS:
+# myRestaurant/models.py
 class Resena(models.Model):
     usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE)
-    platillo = models.ForeignKey(Platillo, on_delete=models.CASCADE)
+    platillo = models.ForeignKey(Platillo, on_delete=models.SET_NULL, null=True, blank=True)  # OPCIONAL
     calificacion = models.IntegerField()
     comentario = models.TextField(blank=True, null=True)
     fecha = models.DateTimeField(auto_now_add=True)
-
+    nombre = models.CharField(max_length=100, blank=True)
+    tipo = models.CharField(max_length=20, choices=[
+        ('Local', 'Local'),
+        ('Extranjero', 'Extranjero')
+    ], default='Local')
+    
+    def __str__(self):
+        return f"{self.nombre} - {self.calificacion} estrellas"
+    
+    class Meta:
+        ordering = ['-fecha']
 
 # ✅ Blog
 class Blog(models.Model):
