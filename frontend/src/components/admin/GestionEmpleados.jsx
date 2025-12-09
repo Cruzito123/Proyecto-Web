@@ -6,7 +6,7 @@ import EditEmployeeModal from '../../components/admin/EditEmployeeModal'; // ðŸ‘
 import '../../styles.css';
 import ContentNavbar from './ContentNavbar';
 
-const API_URL = "http://127.0.0.1:8000/api/usuarios/";
+const API_URL = "/api/usuarios/";
 
 const EmployeeCard = ({ employee, onEdit, onDelete }) => {
   const roleClass = employee.puesto?.toLowerCase().includes('chef') ? 'chef' : 'waiter';

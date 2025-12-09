@@ -1,0 +1,180 @@
+
+:root {
+    --champagne: #F7E7CE;
+    --terracota: #D88C6F;
+    --verde-salvia: #A3B18A;
+    --chocolate: #4E342E;
+    --oro-rosado: #B76E79;
+    --marfil: #FFF8F0;
+    --negro-carbon: #1C1C1C;
+}
+
+body {
+    font-family: "Segoe UI", Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: var(--champagne);
+    color: var(--chocolate);
+    line-height: 1.6;
+}
+
+/* Encabezado */
+header {
+    background-color: var(--champagne);
+    color: var(--chocolate);
+    padding: 15px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 3px solid var(--terracota);
+}
+
+/* Logo */
+.logo {
+    height: 80px;
+    width: auto;
+}
+
+/* Menú de navegación */
+nav ul {
+    list-style: none;
+    display: flex;
+    gap: 25px;
+    margin: 0;
+    padding: 0;
+}
+
+nav ul li a {
+    text-decoration: none;
+    font-weight: bold;
+    color: var(--chocolate);
+    padding: 8px 15px;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+}
+
+nav ul li.active a,
+nav ul li a:hover {
+    background-color: var(--oro-rosado);
+    color: var(--marfil);
+}
+
+/* Títulos */
+.main-title {
+    text-align: center;
+    color: var(--chocolate);
+    margin: 40px 0;
+    font-size: 2.2em;
+}
+
+/* Secciones */
+section {
+    padding: 40px;
+    margin: 20px auto;
+    max-width: 1000px;
+    background-color: var(--marfil);
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+section h2 {
+    color: var(--chocolate);
+    margin-bottom: 15px;
+    border-bottom: 3px solid var(--verde-salvia);
+    display: inline-block;
+    padding-bottom: 5px;
+}
+
+
+.slider-wrapper {
+    position: relative;
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.platillos-container {
+    display: flex; /* Cambiamos de grid a flex */
+    overflow-x: auto; /* Habilitamos el scroll horizontal */
+    gap: 30px;
+    margin-top: 20px;
+    padding: 10px;
+    scroll-behavior: smooth; /* Desplazamiento suave */
+    /* Ocultar la barra de scroll */
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none;  /* IE y Edge */
+}
+
+.platillos-container::-webkit-scrollbar {
+    display: none; /* Chrome, Safari y Opera */
+}
+
+.slide-button {
+    background-color: rgba(255, 248, 240, 0.8);
+    border: 2px solid var(--terracota);
+    border-radius: 50%;
+    width: 45px;
+    height: 45px;
+    font-size: 24px;
+    color: var(--chocolate);
+    cursor: pointer;
+    z-index: 10;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.platillo-card {
+    background-color: var(--champagne);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    flex-shrink: 0; /* Evita que las tarjetas se encojan */
+    width: 380px; /* Ancho de tarjeta reducido */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.platillo-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+}
+
+.platillo-card figure {
+    display: flex; /* Alinea imagen y texto horizontalmente */
+    margin: 0;
+}
+
+.platillo-card img {
+    width: 130px; /* Ancho de imagen reducido */
+    height: auto;
+    object-fit: cover; /* Asegura que la imagen cubra el espacio sin deformarse */
+    flex-shrink: 0;
+}
+
+.platillo-info {
+    padding: 20px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.platillo-info h3 {
+    margin: 0 0 10px 0;
+    color: var(--chocolate);
+}
+
+.platillo-price {
+    margin-top: auto; /* Empuja el precio al final de la tarjeta */
+    font-weight: bold;
+    color: var(--oro-rosado);
+    font-size: 1.1em;
+}
+
+/* Pie de página */
+footer {
+    background-color: var(--negro-carbon);
+    color: var(--champagne);
+    text-align: center;
+    padding: 20px;
+    font-size: 0.95em;
+    margin-top: 40px;
+    border-top: 3px solid var(--oro-rosado);
+}

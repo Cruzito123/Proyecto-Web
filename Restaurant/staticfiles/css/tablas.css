@@ -1,0 +1,83 @@
+:root {
+    --champagne: #F7E7CE;
+    --terracota: #D88C6F;
+    --verde-salvia: #A3B18A;
+    --chocolate: #4E342E;
+    --oro-rosado: #B76E79;
+    --marfil: #FFF8F0;
+    --negro-carbon: #1C1C1C;
+}
+
+/* Contenedor de formularios */
+.forms-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 40px;
+    padding: 0 40px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+form {
+    width: 100%;
+    padding: 30px;
+    background-color: var(--champagne);
+    border-radius: 12px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.12);
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* Etiquetas */
+label {
+    font-weight: bold;
+    color: var(--chocolate);
+}
+
+/* Campos */
+input[type="text"],
+input[type="number"],
+textarea,
+select {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 1em;
+    box-sizing: border-box;
+}
+
+textarea {
+    resize: vertical;
+}
+
+/* Botones */
+form button {
+    padding: 12px 20px;
+    border: none;
+    border-radius: 6px;
+    color: var(--marfil);
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s, background 0.3s;
+    margin-top: 10px;
+}
+
+form button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 12px rgba(0,0,0,0.2);
+}
+
+/* Variantes */
+.alta {
+    background-color: var(--terracota);
+}
+
+.baja {
+    background-color: #f44336; /* alerta roja */
+}
+
+.modificacion {
+    background-color: #008CBA; /* azul neutral */
+}

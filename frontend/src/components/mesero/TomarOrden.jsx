@@ -1,32 +1,45 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './mesero.css';
-
-// Datos de prueba del menú (en el futuro vendrán del backend)
-const MENU_ITEMS = [
-    { id: 1, name: "Boeuf Bourguignon", price: 385 },
-    { id: 2, name: "Coq au Vin", price: 340 },
-    { id: 3, name: "Ratatouille Provenzal", price: 240 },
-    { id: 4, name: "Buddha Bowl Francés", price: 260 },
-    { id: 5, name: "Crème brûlée", price: 120 },
-    { id: 6, name: "Tarta de Manzana", price: 110 },
-];
 
 function TomarOrden({ onNuevaOrden, mesasActivas }) {
     const [numeroMesa, setNumeroMesa] = useState('');
     const [orden, setOrden] = useState([]);
+    
+    // ✅ NUEVO: Estado para guardar el menú real de la BD
+    const [menuItems, setMenuItems] = useState([]); 
+    const [loadingMenu, setLoadingMenu] = useState(true);
+
     const navigate = useNavigate();
+
+    // ✅ NUEVO: Cargar platillos desde la API al iniciar
+    useEffect(() => {
+        const fetchMenu = async () => {
+            try {
+                const response = await fetch('/api/platillos/');
+                if (response.ok) {
+                    const data = await response.json();
+                    setMenuItems(data); // Guardamos los platillos reales
+                } else {
+                    console.error("Error al cargar menú");
+                }
+            } catch (error) {
+                console.error("Error de conexión:", error);
+            } finally {
+                setLoadingMenu(false);
+            }
+        };
+        fetchMenu();
+    }, []);
 
     const agregarPlatillo = (platillo) => {
         setOrden(prevOrden => {
             const platilloExistente = prevOrden.find(item => item.id === platillo.id);
             if (platilloExistente) {
-                // Si ya existe, incrementa la cantidad
                 return prevOrden.map(item =>
                     item.id === platillo.id ? { ...item, cantidad: item.cantidad + 1 } : item
                 );
             }
-            // Si no existe, lo añade con cantidad 1
             return [...prevOrden, { ...platillo, cantidad: 1 }];
         });
     };
@@ -41,9 +54,8 @@ function TomarOrden({ onNuevaOrden, mesasActivas }) {
             alert("Por favor, selecciona una mesa para la orden.");
             return;
         }
-        // Llama a la función del componente padre (App.js)
         onNuevaOrden({ mesa: numeroMesa, items: orden });
-        navigate('/mesero'); // Regresar al panel
+        navigate('/mesero');
     };
 
     return (
@@ -56,22 +68,29 @@ function TomarOrden({ onNuevaOrden, mesasActivas }) {
                         id="numeroMesa"
                         value={numeroMesa}
                         onChange={(e) => setNumeroMesa(e.target.value)}
-                        className="select-mesa" // Puedes añadir estilos para este select
+                        className="select-mesa"
                         required
                     >
                         <option value="">-- Selecciona una mesa --</option>
-                        {mesasActivas.map(mesa => (
+                        {mesasActivas && mesasActivas.map(mesa => (
                             <option key={mesa.id} value={mesa.numero}>Mesa {mesa.numero} ({mesa.comensales} comensales)</option>
                         ))}
                     </select>
 
                     <h3>Menú Disponible</h3>
                     <div className="menu-disponible-grid">
-                        {MENU_ITEMS.map(item => (
-                            <button key={item.id} type="button" className="platillo-btn" onClick={() => agregarPlatillo(item)}>
-                                {item.name}
-                            </button>
-                        ))}
+                        {loadingMenu ? (
+                            <p>Cargando menú...</p>
+                        ) : (
+                            menuItems.map(item => (
+                                <button key={item.id} type="button" className="platillo-btn" onClick={() => agregarPlatillo(item)}>
+                                    <div className="platillo-info">
+                                        <span className="platillo-nombre">{item.nombre}</span>
+                                        <span className="platillo-precio">${parseFloat(item.precio).toFixed(2)}</span>
+                                    </div>
+                                </button>
+                            ))
+                        )}
                     </div>
 
                     <h3>Orden Actual</h3>
@@ -79,8 +98,8 @@ function TomarOrden({ onNuevaOrden, mesasActivas }) {
                         {orden.length > 0 ? (
                             orden.map(item => (
                                 <div key={item.id} className="orden-item">
-                                    <span>{item.cantidad}x {item.name}</span>
-                                    <span>${(item.price * item.cantidad).toFixed(2)}</span>
+                                    <span>{item.cantidad}x {item.nombre}</span>
+                                    <span>${(item.precio * item.cantidad).toFixed(2)}</span>
                                 </div>
                             ))
                         ) : (

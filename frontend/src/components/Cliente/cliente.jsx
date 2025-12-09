@@ -25,7 +25,7 @@ function PanelCliente() {
   const cargarReservaciones = async () => {
     try {
       setLoading(true);
-      const response = await fetch('http://localhost:8000/api/reservaciones/');
+      const response = await fetch('api/reservaciones/');
       
       if (!response.ok) {
         throw new Error(`Error ${response.status}: ${response.statusText}`);

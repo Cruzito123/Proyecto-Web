@@ -8,7 +8,7 @@ import HedearUser from '../../components/common/HeaderUsers.jsx';
 import ContentNavbar from '../../components/admin/ContentNavbar.jsx';
 
 // URL base de tu API de Django (ajusta si es necesario)
-const API_URL = "http://localhost:8000/api/platillos/";
+const API_URL = "/api/platillos/"
 
 function GestionPlatillos() {
     const [message, setMessage] = useState('');

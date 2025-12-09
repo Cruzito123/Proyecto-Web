@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom'; // 👈 Importar useNavigate
 
 // URL base de tu API de Django
-const API_URL = "http://localhost:8000/api";
+const API_URL = "/api";
 
 /* ----------------------------------------
    MODAL DE REGISTRO (CORREGIDO)
@@ -193,7 +193,7 @@ function LoginModal({ onClose, onLoginSuccess }) {
 
             // 3. Lógica de Redirección (Manejo del "Frame correspondiente")
             let path = '/';
-            if (userRole === 'admin') {
+            if (userRole === 'Admin') {
                 path = '/gestion-platillos';
             } else if (userRole === 'mesero') {
                 path = '/mesero';

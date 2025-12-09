@@ -4,7 +4,7 @@ import EditClientModal from '../../components/admin/EditClientModal';
 import '../../styles.css';
 import ContentNavbar from './ContentNavbar';
 
-const API_URL = "http://127.0.0.1:8000/api/usuarios/";
+const API_URL = "/api/usuarios/";
 
 // Tarjeta específica para Clientes
 const ClientCard = ({ client, onEdit, onDelete }) => (

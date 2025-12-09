@@ -3,24 +3,30 @@ Django settings for Restaurant project.
 """
 import os
 from pathlib import Path
-import dj_database_url  # Asegúrate de haber instalado: pip install dj-database-url
+import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # --- SEGURIDAD Y PRODUCCIÓN ---
 
-# SECURITY WARNING: keep the secret key used in production secret!
-# En producción leerá la variable de entorno, en local usará la clave insegura por defecto.
+# SECRET KEY: En producción usa la del entorno, sino la default
 SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-zd#8*rh864_#b$7g+p(u2=ys_dzyq8^^bg2=*$=%)84klqiaoi')
 
-# SECURITY WARNING: don't run with debug turned on in production!
-# Busca la variable 'DEBUG'. Si no existe, asume False (seguro para producción).
+# DEBUG: Debe ser False en producción, pero lo dejamos dinámico
 DEBUG = os.environ.get('DEBUG', 'False') == 'True'
 
-# ALLOWED_HOSTS: Lee una lista separada por comas desde las variables de entorno.
-# Ejemplo en .env: ALLOWED_HOSTS=tusitio.com,54.123.45.67
-ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', '127.0.0.1,localhost').split(',')
+# --- DOMINIOS PERMITIDOS ---
+# Agregamos explícitamente tu dominio DuckDNS y las IPs locales
+ALLOWED_HOSTS = [
+    'lejardinmexican.duckdns.org', 
+    'localhost', 
+    '127.0.0.1', 
+    'www.lejardinmexican.duckdns.org'
+]
+# Si hay más en el .env, los agregamos también
+if os.environ.get('ALLOWED_HOSTS'):
+    ALLOWED_HOSTS.extend(os.environ.get('ALLOWED_HOSTS').split(','))
 
 
 # Application definition
@@ -35,7 +41,6 @@ INSTALLED_APPS = [
     'rest_framework',
     'myRestaurant',
     'corsheaders',
-    # 'sslserver' se agrega dinámicamente abajo solo si es necesario
 ]
 
 # Solo agregamos sslserver si estamos en modo DEBUG (desarrollo local)
@@ -49,6 +54,7 @@ if DEBUG:
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware', # CORS debe ir lo más arriba posible
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware', # Recomendado para estáticos en prod (opcional)
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -79,12 +85,6 @@ WSGI_APPLICATION = 'Restaurant.wsgi.application'
 
 
 # Database
-# https://docs.djangoproject.com/en/4.2/ref/settings/#databases
-
-# Configuración híbrida:
-# 1. Intenta usar la variable DATABASE_URL del entorno (AWS/Producción).
-# 2. Si no la encuentra, usa tu configuración local de siempre.
-
 DATABASES = {
     'default': dj_database_url.config(
         default='postgres://postgres:Losarmas1*@localhost:5432/restaurant_db',
@@ -110,36 +110,71 @@ USE_TZ = True
 
 
 # Static files (CSS, JavaScript, Images)
-
 STATIC_URL = '/static/'
 
-# Carpetas donde buscas estáticos en desarrollo
 STATICFILES_DIRS = [
     BASE_DIR / "myRestaurant" / "static",
 ]
 
-# IMPORTANTE PARA PRODUCCIÓN:
-# Carpeta donde se juntarán todos los estáticos al ejecutar "python manage.py collectstatic"
+# Carpeta para Nginx
 STATIC_ROOT = BASE_DIR / "staticfiles"
 
 
 # Default primary key field type
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+# ==========================================
+# CONFIGURACIÓN PARA PRODUCCIÓN (HTTPS / AWS)
+# ==========================================
 
-# --- CONFIGURACIÓN DE CORS ---
+# 1. ESTA LÍNEA ES LA SOLUCIÓN AL ERROR DE REDIRECCIONES
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
+# 2. Permitir tu dominio
+ALLOWED_HOSTS = ['*', 'lejardinmexican.duckdns.org', 'localhost', '127.0.0.1']
+
+# 3. Confianza para el Login (CSRF) - OBLIGATORIO
+CSRF_TRUSTED_ORIGINS = [
+    "https://lejardinmexican.duckdns.org",
+]
+
+# 4. CORS (Para que React se conecte)
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",
+    "https://lejardinmexican.duckdns.org",
+]
 CORS_ALLOW_CREDENTIALS = True
 
-# En producción, lee los orígenes desde el entorno.
-# Si no hay variable, usa tus valores locales por defecto.
-if 'CORS_ALLOWED_ORIGINS' in os.environ:
-    CORS_ALLOWED_ORIGINS = os.environ['CORS_ALLOWED_ORIGINS'].split(',')
-else:
-    CORS_ALLOWED_ORIGINS = [
-        "http://localhost:3000",
-        "http://127.0.0.1:3000",
-        "https://localhost:3000",
-        "https://127.0.0.1:3000",
-        "https://192.168.56.1:3000",
-    ]
+# 5. Seguridad
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
+SECURE_SSL_REDIRECT = True
+# ==========================================
+# CONFIGURACIÓN OBLIGATORIA PARA AWS / NGINX
+# ==========================================
+
+# 1. ESTO ARREGLA EL BUCLE DE REDIRECCIONES
+# Le dice a Django: "Si Nginx te dice que es HTTPS, créetelo".
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
+# 2. Seguridad SSL
+SECURE_SSL_REDIRECT = True
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
+
+# 3. Permitir tu dominio DuckDNS (Sobrescribe lo anterior para asegurar)
+ALLOWED_HOSTS = ['*', 'lejardinmexican.duckdns.org', 'localhost', '127.0.0.1']
+
+# 4. Confianza para Login (CSRF)
+CSRF_TRUSTED_ORIGINS = [
+    "https://lejardinmexican.duckdns.org",
+    "https://www.lejardinmexican.duckdns.org"
+]
+
+# 5. Conexión con React (CORS)
+CORS_ALLOW_CREDENTIALS = True
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",
+    "https://lejardinmexican.duckdns.org",
+    "https://www.lejardinmexican.duckdns.org"
+]

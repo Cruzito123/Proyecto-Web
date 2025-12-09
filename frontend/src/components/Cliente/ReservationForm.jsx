@@ -25,7 +25,7 @@ function ReservationForm() {
             console.log('Enviando a la API:', reservationData);
 
             
-            const response = await fetch('http://localhost:8000/api/reservaciones/', {
+            const response = await fetch('/api/reservaciones/', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
