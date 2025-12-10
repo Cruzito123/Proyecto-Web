@@ -22,7 +22,8 @@ ALLOWED_HOSTS = [
     'lejardinmexican.duckdns.org', 
     'localhost', 
     '127.0.0.1', 
-    'www.lejardinmexican.duckdns.org'
+    'www.lejardinmexican.duckdns.org',
+    '78.13.206.166'
 ]
 # Si hay más en el .env, los agregamos también
 if os.environ.get('ALLOWED_HOSTS'):
@@ -124,54 +125,29 @@ STATIC_ROOT = BASE_DIR / "staticfiles"
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # ==========================================
-# CONFIGURACIÓN PARA PRODUCCIÓN (HTTPS / AWS)
+# CONFIGURACIÓN PARA PRODUCCIÓN (AWS/NGINX)
 # ==========================================
 
-# 1. ESTA LÍNEA ES LA SOLUCIÓN AL ERROR DE REDIRECCIONES
+# 1. Permitir que Django confíe en el header X-Forwarded-Proto de Nginx
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
-# 2. Permitir tu dominio
-ALLOWED_HOSTS = ['*', 'lejardinmexican.duckdns.org', 'localhost', '127.0.0.1']
+# 2. ⚠️ DESACTIVAR la redirección automática de Django (Nginx ya lo hace)
+SECURE_SSL_REDIRECT = False  # ← CAMBIO CRÍTICO
 
-# 3. Confianza para el Login (CSRF) - OBLIGATORIO
-CSRF_TRUSTED_ORIGINS = [
-    "https://lejardinmexican.duckdns.org",
-]
-
-# 4. CORS (Para que React se conecte)
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000",
-    "https://lejardinmexican.duckdns.org",
-]
-CORS_ALLOW_CREDENTIALS = True
-
-# 5. Seguridad
-SESSION_COOKIE_SECURE = True
-CSRF_COOKIE_SECURE = True
-SECURE_SSL_REDIRECT = True
-# ==========================================
-# CONFIGURACIÓN OBLIGATORIA PARA AWS / NGINX
-# ==========================================
-
-# 1. ESTO ARREGLA EL BUCLE DE REDIRECCIONES
-# Le dice a Django: "Si Nginx te dice que es HTTPS, créetelo".
-SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-
-# 2. Seguridad SSL
-SECURE_SSL_REDIRECT = True
+# 3. Cookies seguras (solo se envían por HTTPS)
 SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True
 
-# 3. Permitir tu dominio DuckDNS (Sobrescribe lo anterior para asegurar)
-ALLOWED_HOSTS = ['*', 'lejardinmexican.duckdns.org', 'localhost', '127.0.0.1']
+# 4. Dominios permitidos
+ALLOWED_HOSTS = ['lejardinmexican.duckdns.org', '78.13.206.166', 'www.lejardinmexican.duckdns.org', 'localhost', '127.0.0.1']
 
-# 4. Confianza para Login (CSRF)
+# 5. Confianza CSRF para formularios de login
 CSRF_TRUSTED_ORIGINS = [
     "https://lejardinmexican.duckdns.org",
     "https://www.lejardinmexican.duckdns.org"
 ]
 
-# 5. Conexión con React (CORS)
+# 6. CORS para React
 CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
