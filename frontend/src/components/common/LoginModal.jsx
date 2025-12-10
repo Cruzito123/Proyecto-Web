@@ -162,57 +162,85 @@ function LoginModal({ onClose, onLoginSuccess }) {
     const [openRegister, setOpenRegister] = useState(false);
 
     const handleLogin = async (e) => {
-        e.preventDefault();
-        setLoginError("");
+    	e.preventDefault();
+    	setLoginError("");
 
-        try {
-            const res = await fetch(`${API_URL}/login/`, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                    correo: email,
-                    contrasena: password,
-                })
-            });
+    	try {
+        // ==========================================
+        // PASO 1: Obtener CSRF Token
+        // ==========================================
+             await fetch('/api/login/', {
+            	method: 'GET',
+            	credentials: 'include', // Importante para recibir la cookie
+        });
 
-            const data = await res.json();
+        // ==========================================
+        // PASO 2: Hacer Login con CSRF Token
+        // ==========================================
+        const res = await fetch('/api/login/', {
+            method: "POST",
+            credentials: 'include', // Envía cookies
+            headers: {
+                "Content-Type": "application/json",
+                "X-CSRFToken": getCookie('csrftoken'), // Agregar token
+            },
+            body: JSON.stringify({
+                correo: email,
+                contrasena: password,
+            })
+        });
 
-            if (!res.ok) {
-                setLoginError(data.error || data.detail || "Credenciales incorrectas");
-                return;
-            }
+        const data = await res.json();
 
-            // 1. Obtener el objeto de usuario que devuelve Django
-            const userData = data.usuario;
-            const userRole = userData.tipo_usuario;
-            
-            // 2. Guardar el objeto de usuario (en localStorage)
-            localStorage.setItem("user", JSON.stringify(userData));
-
-            // 3. Lógica de Redirección (Manejo del "Frame correspondiente")
-            let path = '/';
-            if (userRole === 'Admin') {
-                path = '/gestion-platillos';
-            } else if (userRole === 'mesero') {
-                path = '/mesero';
-            } else if (userRole === 'chef') {
-                path = '/chef';
-            } else if (userRole === 'cliente') {
-                path = '/cliente'; 
-            }
-
-            // 4. Redirigir y cerrar modal
-            onLoginSuccess(userRole);
-            onClose();
-            navigate(path, { replace: true }); 
-
-        } catch (err) {
-            setLoginError("Error al conectar con el servidor.");
+        if (!res.ok) {
+            setLoginError(data.error || data.detail || "Credenciales incorrectas");
+            return;
         }
-    };
 
+        // ... resto del código (sin cambios)
+        const userData = data.usuario;
+        const userRole = userData.tipo_usuario;
+        
+        localStorage.setItem("user", JSON.stringify(userData));
+
+        let path = '/';
+        if (userRole === 'Admin') {
+            path = '/gestion-platillos';
+        } else if (userRole === 'mesero') {
+            path = '/mesero';
+        } else if (userRole === 'chef') {
+            path = '/chef';
+        } else if (userRole === 'cliente') {
+            path = '/cliente'; 
+        }
+
+        onLoginSuccess(userRole);
+        onClose();
+        navigate(path, { replace: true }); 
+
+    } catch (err) {
+        console.error("Error completo:", err);
+        setLoginError("Error al conectar con el servidor.");
+    }
+};
+
+// ==========================================
+// FUNCIÓN PARA OBTENER COOKIE
+// ==========================================
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
     if (openRegister) {
         // Al cerrar el modal de registro, se vuelve al modal de login
         return <RegisterModal onClose={() => setOpenRegister(false)} />;

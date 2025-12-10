@@ -17,7 +17,13 @@ from .serializers import (
     ResenaSerializer
 )
 from .models import Resena
+from django.views.decorators.csrf import ensure_csrf_cookie
+from django.http import JsonResponse
 
+@ensure_csrf_cookie
+def get_csrf_token(view):
+    """Vista para obtener el CSRF token"""
+    return JsonResponse({'detail': 'CSRF cookie set'})
 
 
 User = get_user_model() 
@@ -44,21 +50,27 @@ class RegisterView(APIView):
         return Response(serializer.errors, status=400)
 
 class LoginView(APIView):
+    # No usar @csrf_exempt en producción, solo para debugging
+    # @method_decorator(csrf_exempt)
+    # def dispatch(self, *args, **kwargs):
+    #     return super().dispatch(*args, **kwargs)
+    
     def post(self, request):
         correo = request.data.get("correo")
         contrasena = request.data.get("contrasena")
 
+        print(f"🔐 Intento de login: {correo}")  # Debug
+
         try:
-            # 1. Busca el usuario por correo
             user = Usuario.objects.get(correo=correo)
         except Usuario.DoesNotExist:
             return Response({"error": "Usuario no encontrado"}, status=404)
 
-        # 2. Verifica la contraseña (plain text vs. hash en DB)
         if not check_password(contrasena, user.contrasena):
             return Response({"error": "Credenciales incorrectas"}, status=400)
 
-        # 3. Login exitoso
+        print(f"✅ Login exitoso: {user.nombre}")  # Debug
+        
         return Response({
             "mensaje": "Login correcto",
             "usuario": UsuarioSerializer(user).data

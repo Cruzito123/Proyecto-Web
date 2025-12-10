@@ -26,7 +26,7 @@ function EditReservationModal({ reservation, isOpen, onClose, onUpdate, onDelete
 
             console.log('Actualizando reserva:', updateData);
 
-            const response = await fetch(`http://localhost:8000/api/reservaciones/${reservation.id}/`, {
+            const response = await fetch(`/api/reservaciones/${reservation.id}/`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
@@ -59,7 +59,7 @@ function EditReservationModal({ reservation, isOpen, onClose, onUpdate, onDelete
         try {
             console.log('Eliminando reserva ID:', reservation.id);
 
-            const response = await fetch(`http://localhost:8000/api/reservaciones/${reservation.id}/`, {
+            const response = await fetch(`/api/reservaciones/${reservation.id}/`, {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',

@@ -1,4 +1,3 @@
-// frontend/src/services/api.js
 import axios from 'axios';
 
 const API_URL = '/api';
@@ -9,22 +8,53 @@ const api = axios.create({
         'Content-Type': 'application/json',
     },
     timeout: 10000,
+    withCredentials: true,  // ← IMPORTANTE: Envía cookies
 });
 
-// Para debugging
-api.interceptors.request.use(request => {
-    console.log(`📤 ${request.method?.toUpperCase()} ${request.url}`, request.data || '');
-    return request;
-});
+// ==========================================
+// INTERCEPTOR PARA AGREGAR CSRF TOKEN
+// ==========================================
+api.interceptors.request.use(
+    (config) => {
+        // Obtener CSRF token de las cookies
+        const csrfToken = getCookie('csrftoken');
+        
+        if (csrfToken) {
+            config.headers['X-CSRFToken'] = csrfToken;
+        }
+        
+        console.log(`📤 ${config.method?.toUpperCase()} ${config.url}`, config.data || '');
+        return config;
+    },
+    (error) => {
+        return Promise.reject(error);
+    }
+);
+
+// Función para obtener cookie por nombre
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
 
 api.interceptors.response.use(
-    response => {
+    (response) => {
         console.log(`✅ ${response.status} ${response.config.url}`);
         return response;
     },
-    error => {
+    (error) => {
         console.error(`❌ ${error.response?.status || 'NETWORK'} ${error.config?.url}`);
-        console.error('Error:', error.response?.data || error.message);
+        console.error('Error completo:', error.response?.data || error.message);
         return Promise.reject(error);
     }
 );
